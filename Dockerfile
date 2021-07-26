@@ -21,4 +21,4 @@ ENV DISCORD_CLIENT_SECRET ""
 ENV MONGODB_URL ""
 ENV PREFIX ""
 
-CMD [ "node", "./build/Server.js" ]
+CMD [ "node", "./build/Main.js" ]
