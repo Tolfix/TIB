@@ -1,0 +1,28 @@
+{
+  "name": "TIB",
+  "version": "1.0.0",
+  "description": "Tolfx Intelligence Bot",
+  "main": "./src/Main.ts",
+  "scripts": {
+    "start": "node ./build/Main.js",
+    "build": "tsc -b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tolfix/TIB.git"
+  },
+  "keywords": [],
+  "author": "Tolfx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tolfix/TIB/issues"
+  },
+  "homepage": "https://github.com/Tolfix/TIB#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "common-tags": "^1.8.0",
+    "date-and-time": "^1.0.1",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0"
+  }
+}
