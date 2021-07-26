@@ -1,0 +1,1 @@
+export const Discord_Token = process.env.DISCORD_TOKEN ?? "";
