@@ -21,13 +21,10 @@ jobs:
       - name: "Install"
         run: npm install
 
-      - name: "Build code"
-        run: tsc -b
-
       - name: "Test code"
         env:
           GITHUB_ACTION: true
-        run: echo "soon"
+        run: npm t
 
   build:
 
