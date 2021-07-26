@@ -12,6 +12,8 @@ Want to contribute? Great! You can contribute by `forking` this repository, then
 
 Join our discord server to know more [`discord server`](https://discord.com/invite/xHde7g93Yh).
 
+# ⭐ | DMCD
+T.I.B uses [`DMCD`](https://github.com/Tolfix/dmcd) to auto deploy applications.
 # 👀 | Keeps tracks of
 - [ ] Sponsors
 - [ ] Disocrd users
