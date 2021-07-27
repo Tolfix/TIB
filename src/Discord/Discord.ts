@@ -10,14 +10,14 @@ export default class DiscordClient
     constructor()
     {
         this.client = new Client();
-        
+
         new ExpressClient(this.client);
 
         this.client.on("ready", () => {
             this.client.user?.setPresence({
 
                 activity: {
-                    type: "STREAMING",
+                    type: "WATCHING",
                     name: `TIB | ${Prefix}help`
                 }
 
