@@ -4,6 +4,7 @@ import { Discord_Client_Id, Discord_Client_Secret, Express_DOMAIN } from "../../
 import fetch from "node-fetch";
 import log from "../../Lib/Logger";
 import OAuth2 from "../Struct/Oauth2";
+import AW from "../../Lib/AW";
 
 export default class Oauth2Router
 {
@@ -17,7 +18,7 @@ export default class Oauth2Router
         this.server = server;
         this.client = client;
         this.oauth = oauth;
-        
+
         this.server.use("/oauth2", this.router);
 
         this.router.get("/discord", (req, res) => {
@@ -29,7 +30,7 @@ export default class Oauth2Router
 
         this.router.get("/discord/callback", async (req, res) => {
 
-            const auth = await fetch("https://discord.com/api/oauth2/token", {
+            const [auth, A_Error] = await AW(fetch("https://discord.com/api/oauth2/token", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -43,10 +44,15 @@ export default class Oauth2Router
                     "redirect_uri": `${Express_DOMAIN}/oauth2/discord/callback`,
                     "scope": "identify"
                 })
-            });
+            }));
+
+            if(!auth || A_Error)
+            {
+                return res.redirect("/");
+            }
 
             let token = (await auth.json())["access_token"];
-            req.session.discord_token = token; 
+            req.session.discord_token = token;
             res.redirect("/");
         });
     }
