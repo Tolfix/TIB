@@ -2,7 +2,7 @@ name: Docker Image
 
 on:
   push:
-    paths: 
+    paths:
       - 'src/**'
     branches:
       - main
@@ -24,6 +24,7 @@ jobs:
       - name: "Test code"
         env:
           GITHUB_ACTION: true
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: npm t
 
   build:
