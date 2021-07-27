@@ -10,7 +10,7 @@ T.I.B is a discord bot hosted here in [`Tolfix`](https://tolfix.com/) dedicated 
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!
 
-Join our discord server to know more [`discord server`](https://discord.com/invite/xHde7g93Yh).
+Join our [`discord server`](https://discord.com/invite/xHde7g93Yh) to know more.
 
 # ⭐ | DMCD
 T.I.B uses [`DMCD`](https://github.com/Tolfix/dmcd) to auto deploy applications.
