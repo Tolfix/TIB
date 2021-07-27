@@ -2,7 +2,6 @@ import { Client } from "discord.js";
 import { Router, Application } from "express";
 import { Discord_Client_Id, Discord_Client_Secret, Express_DOMAIN } from "../../Config";
 import fetch from "node-fetch";
-import log from "../../Lib/Logger";
 import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
 
