@@ -1,7 +1,7 @@
 
 import { Client } from "discord.js";
 import { Discord_Token, Prefix } from "../Config";
-import ExpressClient from "../Express/Express";
+import API from "../API/API";
 
 export default class DiscordClient
 {
@@ -11,7 +11,7 @@ export default class DiscordClient
     {
         this.client = new Client();
 
-        new ExpressClient(this.client);
+        new API(this.client);
 
         this.client.on("ready", () => {
             this.client.user?.setPresence({
