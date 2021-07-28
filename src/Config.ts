@@ -14,4 +14,9 @@ export const Express_Session_Secret = process.env.EXPRESS_SESSION_SECRET ?? requ
 
 export const Database_Mongo_URI = process.env.DB_MONGO_URI ?? "mongodb://localhost/tib";
 
+export const Github_Client_Id = process.env.GITHUB_CLIENT_ID ?? "";
+export const Github_Client_Secret = process.env.GITHUB_CLIENT_SECRET ?? "";
+
+export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
+
 export const DebugMode = process.env.DEBUG ?? false;
