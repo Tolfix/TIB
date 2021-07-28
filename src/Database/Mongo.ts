@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Database_Mongo_URI } from "../Config";
+import { Database_Mongo_URI, DebugMode } from "../Config";
 import log from "../Lib/Logger";
 
 export default class Mongo_Database
@@ -22,7 +22,8 @@ export default class Mongo_Database
     
         this.db.on('disconnected', () => {
             log.error(`Lost connection to the database, shutting down.`)
-            process.exit(1);
+            if(!DebugMode)
+                process.exit(1);
         })
     
         this.db.once('open', () => {
