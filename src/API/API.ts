@@ -6,6 +6,7 @@ import Oauth2Router from "./Routers/Oauth2";
 import session from "express-session";
 import OAuth2 from "./Struct/Oauth2";
 import { API_Error } from "./JSON/Response";
+import CacheClient from "../Cache/Cache";
 
 declare module "express-session"
 {
@@ -20,11 +21,13 @@ export default class API
     private server = express();
     private client: Client;
     private oauth: OAuth2;
+    private cache: CacheClient;
 
-    constructor(client: Client)
+    constructor(client: Client, cache: CacheClient)
     {
         this.client = client;
         this.oauth = new OAuth2(this.client);
+        this.cache = cache;
 
         this.server.use(cors({
             origin: true,
@@ -53,7 +56,7 @@ export default class API
             next();
         });
 
-        new Oauth2Router(this.server, this.client, this.oauth);
+        new Oauth2Router(this.server, this.client, this.oauth, this.cache);
 
         this.server.get("*", (req, res) => {
             return API_Error("Couldn't find what you were looking for", 404)(res);
