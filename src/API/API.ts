@@ -5,6 +5,7 @@ import { Express_Port, Express_Session_Secret } from "../Config";
 import Oauth2Router from "./Routers/Oauth2";
 import session from "express-session";
 import OAuth2 from "./Struct/Oauth2";
+import { API_Error } from "./JSON/Response";
 
 declare module "express-session"
 {
@@ -53,6 +54,10 @@ export default class API
         });
 
         new Oauth2Router(this.server, this.client, this.oauth);
+
+        this.server.get("*", (req, res) => {
+            return API_Error("Couldn't find what you were looking for", 404)(res);
+        })
 
         this.server.listen(Express_Port);
     }
