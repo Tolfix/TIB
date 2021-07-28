@@ -86,9 +86,9 @@ export default class OAuth2 {
         let user_data = await user.json();
         let email_data = ((await email.json() as Array<any>).filter(e => e.primary))[0];
 
-        return {
+        return Promise.resolve({
             email: email_data.email,
             github_id: user_data.id
-        }
+        })
     }
 }

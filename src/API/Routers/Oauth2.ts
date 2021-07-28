@@ -6,6 +6,7 @@ import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
 import UserModel from "../../Database/Schemes/User";
 import { IUser, IUserSchema } from "../../Interfaces/Users";
+import { API_Error } from "../JSON/Response";
 
 export default class Oauth2Router
 {
@@ -24,14 +25,14 @@ export default class Oauth2Router
 
         this.router.get("/link", async (req, res) => {
             if(!req.session.discord_token)
-                res.redirect("/oauth2/discord")
+                return res.redirect("/oauth2/discord")
 
             if(!req.session.github_token)
-                res.redirect("/oauth2/github");
+                return res.redirect("/oauth2/github");
 
             const discord = await this.oauth.Discord_resolveInformation(req);
             const github = await this.oauth.Github_resolveInformation(req);
-                
+
             // Check if there is already a user.
             // Otherwise create one.
             const [User, U_Error] = await AW<IUserSchema>(UserModel.findOne({
@@ -41,12 +42,12 @@ export default class Oauth2Router
 
             if(U_Error)
             {
-                return res.redirect("/");
+                return API_Error("Something went wrong, try again later.")(res);
             }
 
             if(User)
             {
-                return res.redirect("/");
+                return API_Error("You have already linked your account!")(res);
             }
 
             // Assuming no user.
@@ -93,12 +94,13 @@ export default class Oauth2Router
 
             if(!auth || A_Error)
             {
-                return res.redirect("/");
+                return API_Error("Something went wrong, try again later.")(res);
             }
 
             let token = (await auth.json())["access_token"];
+            
             req.session.discord_token = token;
-            this.oauth.Discord_resolveInformation(req);
+
             res.redirect("/oauth2/link");
         });
 
@@ -118,12 +120,13 @@ export default class Oauth2Router
 
             if(!auth || A_Error)
             {
-                return res.redirect("/");
+                return API_Error("Something went wrong, try again later.")(res);
             }
 
             const token = (await auth.json())["access_token"];
 
             req.session.github_token = token;
+
             return res.redirect("/oauth2/link");
         });
 
