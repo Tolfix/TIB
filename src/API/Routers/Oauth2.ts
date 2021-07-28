@@ -4,6 +4,8 @@ import { Discord_Client_Id, Discord_Client_Secret, Express_DOMAIN, Github_Client
 import fetch from "node-fetch";
 import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
+import UserModel from "../../Database/Schemes/User";
+import { IUser, IUserSchema } from "../../Interfaces/Users";
 
 export default class Oauth2Router
 {
@@ -20,9 +22,48 @@ export default class Oauth2Router
 
         this.server.use("/oauth2", this.router);
 
+        this.router.get("/link", async (req, res) => {
+            if(!req.session.discord_token)
+                res.redirect("/oauth2/discord")
+
+            if(!req.session.github_token)
+                res.redirect("/oauth2/github");
+
+            const discord = await this.oauth.Discord_resolveInformation(req);
+            const github = await this.oauth.Github_resolveInformation(req);
+                
+            // Check if there is already a user.
+            // Otherwise create one.
+            const [User, U_Error] = await AW<IUserSchema>(UserModel.findOne({
+                discord_id: discord.id,
+                github_id: github.github_id
+            }));
+
+            if(U_Error)
+            {
+                return res.redirect("/");
+            }
+
+            if(User)
+            {
+                return res.redirect("/");
+            }
+
+            // Assuming no user.
+            new UserModel(<IUser>{
+                discord_id: discord.id,
+                discord_email: discord.email,
+                email: github.email,
+                github_email: github.email,
+                github_id: github.github_id
+            }).save();
+
+            res.redirect("/");
+        });
+
         this.router.get("/discord", (req, res) => {
             let callbackURL = `${Express_DOMAIN}/oauth2/discord/callback`;
-            let discord_uri = `https://discord.com/oauth2/authorize?client_id=${Discord_Client_Id}&redirect_uri=${encodeURIComponent(callbackURL)}&response_type=code&scope=${encodeURIComponent("identify guilds guilds.join email")}`
+            let discord_uri = `https://discord.com/oauth2/authorize?client_id=${Discord_Client_Id}&redirect_uri=${encodeURIComponent(callbackURL)}&response_type=code&scope=${encodeURIComponent("identify guilds.join email")}`
 
             return res.redirect(discord_uri);
         });
@@ -52,7 +93,8 @@ export default class Oauth2Router
 
             let token = (await auth.json())["access_token"];
             req.session.discord_token = token;
-            res.redirect("/");
+            this.oauth.Discord_resolveInformation(req);
+            res.redirect("/oauth2/link");
         });
 
         this.router.get("/github", (req, res) => {
@@ -77,7 +119,7 @@ export default class Oauth2Router
             const token = (await auth.json())["access_token"];
 
             req.session.github_token = token;
-            return res.redirect("/");
+            return res.redirect("/oauth2/link");
         });
 
     }

@@ -14,7 +14,7 @@ declare module "express-session"
     }
 }
 
-export default class ExpressClient
+export default class API
 {
     private server = express();
     private client: Client;

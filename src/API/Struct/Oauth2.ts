@@ -1,7 +1,8 @@
 import { Client } from "discord.js";
 import { Request } from "express";
 import fetch from "node-fetch"
-import { APIUser } from "../../Interfaces/APIUser";
+import { APIUser } from "../../Interfaces/Discord/APIUser";
+import { Github_APIUser } from "../../Interfaces/Github/APIUser";
 
 export default class OAuth2 {
     protected guilds: object | any;
@@ -12,7 +13,7 @@ export default class OAuth2 {
         this.guilds = new Object();
     }
 
-    public async resolveInformation(req: Request): Promise<APIUser> {
+    public async Discord_resolveInformation(req: Request): Promise<APIUser> {
         
         if (!req.session.discord_token) {
             //@ts-ignore
@@ -55,19 +56,39 @@ export default class OAuth2 {
             id: user.id,
             username: user.username,
             discriminator: user.discriminator,
-            guilds: this.guilds[user.id]?.map((guild: any) => {
-                const g = this.client.guilds.cache.get(guild.id);
-                return {
-                    id: guild.id,
-                    name: guild.name,
-                    icon: guild.icon,
-                    //@ts-ignore
-                    admin: g ? g.members.cache.get(user.id).permissions.has("ADMINISTRATOR") : guild.owner,
-                    invited: g ? true : false
-                }
-            }),
             avatar: user.avatar,
-            admin: false,
+            email: user.email,
+        }
+    }
+
+    public async Github_resolveInformation(req: Request): Promise<Github_APIUser>
+    {
+        if(!req.session.github_token)
+        {
+            //@ts-ignore
+            return null
+        }
+
+        const user = await fetch(`https://api.github.com/user`, {
+            method: "GET",
+            headers: {
+                authorization: `token ${req.session.github_token}`
+            }
+        });
+
+        const email = await fetch(`https://api.github.com/user/emails`, {
+            method: "GET",
+            headers: {
+                authorization: `token ${req.session.github_token}`
+            }
+        });
+
+        let user_data = await user.json();
+        let email_data = ((await email.json() as Array<any>).filter(e => e.primary))[0];
+
+        return {
+            email: email_data.email,
+            github_id: user_data.id
         }
     }
 }
