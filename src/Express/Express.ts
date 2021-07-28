@@ -10,6 +10,7 @@ declare module "express-session"
 {
     interface SessionData {
         discord_token?: string;
+        github_token?: string;
     }
 }
 
@@ -44,6 +45,8 @@ export default class ExpressClient
         this.server.use(express.urlencoded({ extended: true }));
 
         this.server.use((req, res, next) => {
+
+            res.setHeader("Content-Type", "application/json");
             res.setHeader('X-Powered-By', 'Tolfix');
 
             next();
