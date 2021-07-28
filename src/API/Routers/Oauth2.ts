@@ -7,19 +7,22 @@ import AW from "../../Lib/AW";
 import UserModel from "../../Database/Schemes/User";
 import { IUser, IUserSchema } from "../../Interfaces/Users";
 import { API_Error } from "../JSON/Response";
+import CacheClient from "../../Cache/Cache";
 
 export default class Oauth2Router
 {
     private server: Application;
     private client: Client; 
     private oauth: OAuth2;
+    private cache: CacheClient;
     private router = Router();
 
-    constructor(server: Application, client: Client, oauth: OAuth2)
+    constructor(server: Application, client: Client, oauth: OAuth2, cache: CacheClient)
     {
         this.server = server;
         this.client = client;
         this.oauth = oauth;
+        this.cache = cache;
 
         this.server.use("/oauth2", this.router);
 
@@ -35,15 +38,17 @@ export default class Oauth2Router
 
             // Check if there is already a user.
             // Otherwise create one.
-            const [User, U_Error] = await AW<IUserSchema>(UserModel.findOne({
-                discord_id: discord.id,
-                github_id: github.github_id
-            }));
+            // const [User, U_Error] = await AW<IUserSchema>(UserModel.findOne({
+            //     discord_id: discord.id,
+            //     github_id: github.github_id
+            // }));
 
-            if(U_Error)
-            {
-                return API_Error("Something went wrong, try again later.")(res);
-            }
+            // if(U_Error)
+            // {
+            //     return API_Error("Something went wrong, try again later.")(res);
+            // }
+
+            const User = this.cache.User.get(github.github_id);
 
             if(User)
             {
@@ -58,6 +63,14 @@ export default class Oauth2Router
                 github_email: github.email,
                 github_id: github.github_id
             }).save();
+
+            this.cache.User.set(github.github_id, {
+                discord_id: discord.id,
+                discord_email: discord.email,
+                email: github.email,
+                github_email: github.email,
+                github_id: github.github_id
+            });
 
             // Adds the user to our discord server.
             (await this.client.guilds.fetch(Discord_Guild_Id)).addMember(discord.id, {
