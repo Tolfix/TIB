@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import { Router, Application } from "express";
-import { Discord_Client_Id, Discord_Client_Secret, Express_DOMAIN, Github_Client_Id, Github_Client_Secret } from "../../Config";
+import { Discord_Client_Id, Discord_Client_Secret, Discord_Guild_Id, Express_DOMAIN, Github_Client_Id, Github_Client_Secret } from "../../Config";
 import fetch from "node-fetch";
 import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
@@ -58,7 +58,12 @@ export default class Oauth2Router
                 github_id: github.github_id
             }).save();
 
-            res.redirect("/");
+            // Adds the user to our discord server.
+            (await this.client.guilds.fetch(Discord_Guild_Id)).addMember(discord.id, {
+                accessToken: req?.session.discord_token ?? "",
+            });
+
+            res.redirect("https://github.com/Tolfix");
         });
 
         this.router.get("/discord", (req, res) => {

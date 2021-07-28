@@ -4,6 +4,7 @@
 export const Discord_Token = process.env.DISCORD_TOKEN ?? "";
 export const Discord_Client_Id = process.env.DISCORD_CLIENT_ID ?? "";
 export const Discord_Client_Secret = process.env.DISCORD_CLIENT_SECRET ?? "";
+export const Discord_Guild_Id = "833438897484595230";
 export const Prefix = process.env.PREFIX ?? "tib ";
 
 export const Express_Port = process.env.EXPRESS_PORT ?? 8080;
