@@ -4,7 +4,6 @@ import { ApplicationCommandOptionValue, DiscordInteractions, Interaction } from 
 import { GuildMember } from "discord.js";
 import log from "../../Lib/Logger";
 import AW from "../../Lib/AW";
-import SlashCommandsArray from "../../Lib/Discord/SlashCommands";
 import { readdirSync } from "fs";
 import SlashReply from "../../Lib/Discord/SlashReply";
 
@@ -30,21 +29,18 @@ export default async function SlashHandler(client: Client)
         publicKey: Discord_Public_Key,
     });
 
-    for (let i = 0; i < SlashCommandsArray.length; i++)
-    {
-        const [Data, C_Error] = await AW(interaction.createApplicationCommand(SlashCommandsArray[i], Discord_Guild_Id))
-        if(C_Error)
-            log.error(`${C_Error}`)
-    }
-
     let commandDir = HomeDir+"/build/Discord/Slash";
     client.category = readdirSync(commandDir);
-    readdirSync(commandDir).forEach((dir) => {
+    readdirSync(commandDir).forEach(async (dir) => {
         const command = readdirSync(`${commandDir}/${dir}`).filter((f) => f.endsWith('.js'));
         for (let file of command) {
             const pull = new (require(`${commandDir}/${dir}/${file}`)).default;
             if (pull.name) {
                 client.slash.set(pull.name, pull);
+
+                const [Data, C_Error] = await AW(interaction.createApplicationCommand(pull.options, Discord_Guild_Id))
+                if(C_Error)
+                    log.error(`${C_Error}`)
             }
             continue;
         }

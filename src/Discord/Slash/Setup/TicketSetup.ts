@@ -9,6 +9,18 @@ import Slash from "../../Struct/Slash";
 export default class TicketSetup extends Slash
 {
     public name = "ticket-setup";
+    public options = {
+        "name": this.name,
+        "description": "Creates a setup for ticket system",
+        "options": [
+            {
+                "type": 7,
+                "name": "channel",
+                "description": "",
+                "required": true
+            }
+        ]
+    }
     public run(
         client: Client,
         interaction: Interaction,
