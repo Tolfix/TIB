@@ -16,7 +16,7 @@ export default class TicketSetup extends Slash
             {
                 "type": 7,
                 "name": "channel",
-                "description": "",
+                "description": "The channel",
                 "required": true
             }
         ]
