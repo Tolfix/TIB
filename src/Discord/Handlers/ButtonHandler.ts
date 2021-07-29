@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { readdirSync } from "fs";
 import { HomeDir } from "../../Config";
-import { ButtonIds } from "../../Lib/Discord/ButtonsIds";
+import { ButtonIds } from "../../Interfaces/Discord/ButtonsIds";
 
 declare module "discord-buttons"
 {
