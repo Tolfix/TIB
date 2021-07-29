@@ -8,12 +8,15 @@ import Command from "./Struct/Command";
 import discord_button, { AwaitMessageButtonOptions, ButtonCollector, MessageActionRow, MessageButton, MessageComponent, MessageMenu } from "discord-buttons";
 import ButtonHandler from "./Handlers/ButtonHandler";
 import Button from "./Struct/Button";
+import Slash from "./Struct/Slash";
+import SlashHandler from "./Handlers/SlashHandler";
 
 declare module 'discord.js' 
 {
     export interface Client {
       commands: Collection<string, Command>;
       buttons: Collection<string, Button>;
+      slash: Collection<string, Slash>;
       category: string[];
     }
 
@@ -114,11 +117,13 @@ export default class DiscordClient
 
         this.client.commands = new Collection();
         this.client.buttons = new Collection();
+        this.client.slash = new Collection();
 
         new API(this.client, this.cache);
 
         CommandHandler(this.client);
         ButtonHandler(this.client);
+        SlashHandler(this.client)
         discord_button(this.client);
 
         this.client.on("ready", () => {
