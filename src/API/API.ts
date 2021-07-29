@@ -21,13 +21,11 @@ export default class API
     private server = express();
     private client: Client;
     private oauth: OAuth2;
-    private cache: CacheClient;
 
-    constructor(client: Client, cache: CacheClient)
+    constructor(client: Client)
     {
         this.client = client;
         this.oauth = new OAuth2(this.client);
-        this.cache = cache;
 
         this.server.use(cors({
             origin: true,
@@ -56,7 +54,7 @@ export default class API
             next();
         });
 
-        new Oauth2Router(this.server, this.client, this.oauth, this.cache);
+        new Oauth2Router(this.server, this.client, this.oauth);
 
         this.server.get("*", (req, res) => {
             return API_Error("Couldn't find what you were looking for", 404)(res);

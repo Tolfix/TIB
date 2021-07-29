@@ -14,15 +14,13 @@ export default class Oauth2Router
     private server: Application;
     private client: Client; 
     private oauth: OAuth2;
-    private cache: CacheClient;
     private router = Router();
 
-    constructor(server: Application, client: Client, oauth: OAuth2, cache: CacheClient)
+    constructor(server: Application, client: Client, oauth: OAuth2)
     {
         this.server = server;
         this.client = client;
         this.oauth = oauth;
-        this.cache = cache;
 
         this.server.use("/oauth2", this.router);
 
@@ -48,7 +46,7 @@ export default class Oauth2Router
             //     return API_Error("Something went wrong, try again later.")(res);
             // }
 
-            const User = this.cache.User.get(github.github_id);
+            const User = CacheClient.User.get(github.github_id);
 
             if(User)
             {
@@ -64,13 +62,13 @@ export default class Oauth2Router
                 github_id: github.github_id
             }).save();
 
-            this.cache.User.set(github.github_id, {
+            CacheClient.User.set(github.github_id, {
                 discord_id: discord.id,
                 discord_email: discord.email,
                 email: github.email,
                 github_email: github.email,
                 github_id: github.github_id,
-                contributedTo: this.cache.ContributedTo(github.github_id),
+                contributedTo: CacheClient.ContributedTo(github.github_id),
             });
 
             // Adds the user to our discord server.

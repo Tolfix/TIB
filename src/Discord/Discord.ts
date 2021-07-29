@@ -108,18 +108,16 @@ declare module "discord-buttons"
 export default class DiscordClient
 {
     private client: Client;
-    private cache: CacheClient;
 
-    constructor(cache: CacheClient)
+    constructor()
     {
         this.client = new Client();
-        this.cache = cache;
 
         this.client.commands = new Collection();
         this.client.buttons = new Collection();
         this.client.slash = new Collection();
 
-        new API(this.client, this.cache);
+        new API(this.client);
 
         CommandHandler(this.client);
         ButtonHandler(this.client);
