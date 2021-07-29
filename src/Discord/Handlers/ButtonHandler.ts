@@ -1,6 +1,15 @@
 import { Client } from "discord.js";
 import { readdirSync } from "fs";
 import { HomeDir } from "../../Config";
+import { ButtonIds } from "../../Lib/Discord/ButtonsIds";
+
+declare module "discord-buttons"
+{
+    export interface MessageButton
+    {
+        setID(id: keyof ButtonIds): this;
+    }
+}
 
 export default function ButtonHandler(client: Client)
 {
