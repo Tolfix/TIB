@@ -70,7 +70,7 @@ export default class Oauth2Router
                 email: github.email,
                 github_email: github.email,
                 github_id: github.github_id,
-                contributedTo: undefined,
+                contributedTo: this.cache.ContributedTo(github.github_id),
             });
 
             // Adds the user to our discord server.
