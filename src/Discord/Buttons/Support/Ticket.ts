@@ -1,5 +1,5 @@
 import { MessageButton, MessageComponent } from "discord-buttons";
-import { Discord_Ticker_Parent_Id } from "../../../Config";
+import { Discord_Ticket_Parent_Id } from "../../../Config";
 import { ButtonIds } from "../../../Interfaces/Discord/ButtonsIds";
 import log from "../../../Lib/Logger";
 import Button from "../../Struct/Button";
@@ -11,7 +11,7 @@ export default class TicketButton extends Button
     {
         // Get user who clicked
         const user = button.clicker;
-        const parent = Discord_Ticker_Parent_Id;
+        const parent = Discord_Ticket_Parent_Id;
 
         button.guild.channels.create(`${user.user.username}-ticket`, {
             type: "text",
