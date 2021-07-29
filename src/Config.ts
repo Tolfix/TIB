@@ -11,7 +11,7 @@ export const Prefix = process.env.PREFIX ?? "tib ";
 
 export const Express_Port = process.env.EXPRESS_PORT ?? 8080;
 export const Express_FQDN = process.env.FQDN ?? `localhost:${Express_Port}`;
-export const Express_HTTP = process.env.HTTP ?? "http";
+export const Express_HTTP: "https" | "http" = process.env.HTTP === "https" ? "https" : "http";
 export const Express_DOMAIN = `${Express_HTTP}://${process.env.FQDN ?? `localhost:${Express_Port}`}`;
 export const Express_Session_Secret = process.env.EXPRESS_SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");
 
