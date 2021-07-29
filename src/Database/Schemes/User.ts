@@ -10,7 +10,7 @@ const UserSchema = new Schema
             required: true
         },
         github_id: {
-            type: String,
+            type: Number,
             required: true
         },
         github_email: {
