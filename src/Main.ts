@@ -6,6 +6,9 @@ import DiscordClient from "./Discord/Discord";
 
 Check();
 
-const Cache = new CacheClient();
-new DiscordClient(Cache);
+CacheClient.CacheGithub().then(() => {
+    CacheClient.CacheUser()
+});
+
+new DiscordClient();
 new Mongo_Database();
