@@ -1,5 +1,5 @@
 export interface Github_APIUser
 {
-    github_id: string;
+    github_id: number;
     email: string;
 }
