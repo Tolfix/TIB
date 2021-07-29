@@ -19,6 +19,8 @@ export const Database_Mongo_URI = process.env.DB_MONGO_URI ?? "mongodb://localho
 
 export const Github_Client_Id = process.env.GITHUB_CLIENT_ID ?? "";
 export const Github_Client_Secret = process.env.GITHUB_CLIENT_SECRET ?? "";
+export const Github_Org = "Tolfix";
+export const Github_API = "https://api.github.com/";
 
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 
