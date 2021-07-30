@@ -38,7 +38,7 @@ export default class Oauth2Router
 
             if(User)
             {
-                return API_Error("You have already linked your account!")(res);
+                return API_Error("You have already linked your account.")(res);
             }
 
             // Assuming no user.
