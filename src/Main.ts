@@ -1,11 +1,13 @@
 require("dotenv").config();
 import CacheClient from "./Cache/Cache";
 import Check from "./Check";
+import CronHandler from "./Cron/CronHandler";
 import Mongo_Database from "./Database/Mongo";
 import DiscordClient from "./Discord/Discord";
 import log from "./Lib/Logger";
 
 Check();
+CronHandler();
 
 new Mongo_Database();
 
