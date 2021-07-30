@@ -2,7 +2,6 @@
 import discord, { Client, Collection } from "discord.js";
 import { Discord_Token, Prefix } from "../Config";
 import API from "../API/API";
-import CacheClient from "../Cache/Cache";
 import CommandHandler from "./Handlers/CommandHandler";
 import Command from "./Struct/Command";
 import discord_button, { AwaitMessageButtonOptions, ButtonCollector, MessageActionRow, MessageButton, MessageComponent, MessageMenu } from "discord-buttons";
@@ -10,6 +9,8 @@ import ButtonHandler from "./Handlers/ButtonHandler";
 import Button from "./Struct/Button";
 import Slash from "./Struct/Slash";
 import SlashHandler from "./Handlers/SlashHandler";
+import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
+import log from "../Lib/Logger";
 
 declare module 'discord.js' 
 {
@@ -125,6 +126,7 @@ export default class DiscordClient
         discord_button(this.client);
 
         this.client.on("ready", () => {
+            log.verbos(`Discord client ready.`)
             this.client.user?.setPresence({
                 status: "dnd",
                 activity: {
@@ -163,6 +165,11 @@ export default class DiscordClient
             {
                 b(button);
             }
+        });
+
+        this.client.on("guildMemberAdd", (member) => {
+            console.log("hello?")
+            GuildMemberAddHandler(this.client, member);
         });
 
         this.client.login(Discord_Token);
