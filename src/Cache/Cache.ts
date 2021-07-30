@@ -23,11 +23,15 @@ function ContributedTo(userId: number)
     let contributedto: Repository[] = [];
             
     for (const [key, value] of Respositories.entries()) {
-        for(const contributor of value.contributors)
+        log.debug(value)
+        if(value.contributors)
         {
-            if(contributor.author.id === userId)
+            for(const contributor of value.contributors)
             {
-                contributedto.push(value);
+                if(contributor.author.id === userId)
+                {
+                    contributedto.push(value);
+                }
             }
         }
     }
@@ -39,7 +43,6 @@ async function CacheUser()
 {
     UserModel.find().then(users => {
         users.forEach(user => {
-
             User.set(user.github_id, {
                 discord_id: user.id,
                 discord_email: user.email,
@@ -54,10 +57,8 @@ async function CacheUser()
 
 async function CacheGithub()
 {
-    const secrets = `?client_id=${Github_Client_Id}&client_secret=${Github_Client_Secret}`
-    // console.log(Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`, 'base64').toString("base64"))
     // Get all of our repos
-    const Repos = await (await fetch(`${Github_API}orgs/${Github_Org}/repos${secrets}`, {
+    const Repos = await (await fetch(`${Github_API}orgs/${Github_Org}/repos`, {
         headers: {
             authorization: `Basic ${Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`).toString("base64")}`
         }
@@ -66,7 +67,7 @@ async function CacheGithub()
     for await(let repo of Repos)
     {
         // Get contributors
-        const Contri = await (await fetch(`${Github_API}repos/${Github_Org}/${repo.name}/stats/contributors${secrets}`, {
+        const Contri = await (await fetch(`${Github_API}repos/${Github_Org}/${repo.name}/stats/contributors`, {
             headers: {
                 authorization: `Basic ${Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`).toString("base64")}`
             }
