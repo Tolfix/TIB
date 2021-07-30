@@ -1,16 +1,5 @@
-import { MessageActionRow, MessageButton, MessageButtonStyle } from "discord-buttons";
-import { ButtonIds } from "../../Interfaces/Discord/ButtonsIds";
-
-interface DataButton
-{
-    name: string;
-    id?: keyof ButtonIds;
-    // style: "blurple" | "grey" | "green" | "red" | "url"
-    style?: MessageButtonStyle;
-    disabled?: Boolean;
-    emoji?: string;
-    url?: string;
-}
+import { MessageActionRow, MessageButton } from "discord-buttons";
+import { DataButton } from "../../Interfaces/Discord/CreateButton";
 
 export default function CreateButton(...data: DataButton[]): MessageActionRow
 {
