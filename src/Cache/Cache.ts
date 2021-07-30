@@ -24,7 +24,7 @@ function ContributedTo(userId: number)
             
     for (const [key, value] of Respositories.entries()) {
         log.debug(value)
-        if(value.contributors)
+        if(value.contributors.length > 0)
         {
             for(const contributor of value.contributors)
             {
