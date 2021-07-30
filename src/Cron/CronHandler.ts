@@ -1,6 +1,11 @@
 import { readdirSync } from "fs";
 import { HomeDir } from "../Config";
 
+/**
+ * @URL https://crontab.guru/
+ * @description
+ * Grabs each cron and executes it.
+ */
 export default function CronHandler()
 {
     let commandDir = HomeDir+"/build/Cron";

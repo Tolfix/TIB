@@ -6,7 +6,6 @@ import Oauth2Router from "./Routers/Oauth2";
 import session from "express-session";
 import OAuth2 from "./Struct/Oauth2";
 import { API_Error } from "./JSON/Response";
-import CacheClient from "../Cache/Cache";
 
 declare module "express-session"
 {
