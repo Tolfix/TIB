@@ -8,7 +8,7 @@ export default function ReCache()
     new CronJob("0 0 * * *", () => {
         log.info(`Re Caching..`)
         CacheClient.CacheGithub().then(() => {
-            CacheClient.CacheUser().then(() => {
+            CacheClient.CacheUsers().then(() => {
                 log.info(`Re Caching done.`);
             });
         });

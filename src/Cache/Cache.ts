@@ -4,7 +4,7 @@ import UserModel from "../Database/Schemes/User";
 import { IC_User } from "../Interfaces/Cache/Cache_User";
 import { Contributor } from "../Interfaces/Github/Contributors";
 import { Repository } from "../Interfaces/Github/Repository";
-import { IUser } from "../Interfaces/Users";
+import { IUser, IUserSchema } from "../Interfaces/Users";
 import log from "../Lib/Logger";
     
 export const User = new Map<IC_User, IUser>();
@@ -39,19 +39,28 @@ function ContributedTo(userId: number)
     return contributedto
 }
 
-async function CacheUser()
+async function CacheUser(user: IUserSchema)
+{
+    log.info(`Caching user`, user.github_id, user.email);
+    User.set(user.github_id, {
+        discord_id: user.discord_id,
+        discord_email: user.email,
+        email: user.email,
+        github_email: user.email,
+        github_id: user.github_id,
+        contributedTo: ContributedTo(user.github_id)
+    });
+
+    if(!User.get(user.github_id))
+        CacheUser(user)
+}
+
+async function CacheUsers()
 {
     UserModel.find().then(users => {
         for(const user of users)
         {
-            User.set(user.github_id, {
-                discord_id: user.discord_id,
-                discord_email: user.email,
-                email: user.email,
-                github_email: user.email,
-                github_id: user.github_id,
-                contributedTo: ContributedTo(user.github_id)
-            });
+            CacheUser(user)
         }
 
         return Promise.resolve(true);
@@ -90,6 +99,7 @@ const CacheClient = {
     Respositories,
     CacheGithub,
     CacheUser,
+    CacheUsers,
     ContributedTo,
     getFromDiscordId
 }

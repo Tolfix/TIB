@@ -13,7 +13,7 @@ new Mongo_Database();
 
 log.info(`Caching..`)
 CacheClient.CacheGithub().then(() => {
-    CacheClient.CacheUser().then(() => {
+    CacheClient.CacheUsers().then(() => {
         log.info(`Caching done.`);
         new DiscordClient();
     });
