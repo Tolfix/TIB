@@ -7,6 +7,9 @@
 # 📔 | T.I.B
 T.I.B is a discord bot hosted here in [`Tolfix`](https://tolfix.com/) dedicated to keep the flow running on the community.
 
+# Status
+[![Docker Image](https://github.com/Tolfix/TIB/actions/workflows/docker-backend.yml/badge.svg)](https://github.com/Tolfix/TIB/actions/workflows/docker-backend.yml)
+
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!
 
