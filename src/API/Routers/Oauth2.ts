@@ -59,7 +59,8 @@ export default class Oauth2Router
                 discord_email: discord.email,
                 email: github.email,
                 github_email: github.email,
-                github_id: github.github_id
+                github_id: github.github_id,
+                contributedTo: undefined,
             }).save();
 
             CacheClient.User.set(github.github_id, {
