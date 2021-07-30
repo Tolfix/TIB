@@ -11,6 +11,7 @@ export default class DeleteChannelButton extends Button
     public run(button: MessageComponent)
     {
         const userCache = CacheClient.getFromDiscordId(button.clicker.id);
+        console.log(userCache)
         if(!userCache)
             return button.reply.send(`Please ensure to link your account before checking.`, { ephemeral: true, component: Quick_Link_Github_Button })
     

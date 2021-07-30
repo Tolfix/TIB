@@ -34,18 +34,6 @@ export default class Oauth2Router
             const discord = await this.oauth.Discord_resolveInformation(req);
             const github = await this.oauth.Github_resolveInformation(req);
 
-            // Check if there is already a user.
-            // Otherwise create one.
-            // const [User, U_Error] = await AW<IUserSchema>(UserModel.findOne({
-            //     discord_id: discord.id,
-            //     github_id: github.github_id
-            // }));
-
-            // if(U_Error)
-            // {
-            //     return API_Error("Something went wrong, try again later.")(res);
-            // }
-
             const User = CacheClient.User.get(github.github_id);
 
             if(User)
