@@ -36,9 +36,9 @@ export default class SlashReply
         //@ts-ignore
         this.client.api.interactions(this.interaction.id, this.interaction.token).callback.post({
             data: {
-            type: 4,
-            data,
+                type: 4,
+                data,
             },
-        })
+        });
     }
 };
