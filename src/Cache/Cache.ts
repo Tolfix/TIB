@@ -42,16 +42,19 @@ function ContributedTo(userId: number)
 async function CacheUser()
 {
     UserModel.find().then(users => {
-        users.forEach(user => {
+        for(const user of users)
+        {
             User.set(user.github_id, {
-                discord_id: user.id,
+                discord_id: user.discord_id,
                 discord_email: user.email,
                 email: user.email,
                 github_email: user.email,
                 github_id: user.github_id,
                 contributedTo: ContributedTo(user.github_id)
             });
-        });
+        }
+
+        return Promise.resolve(true);
     });
 }
 
