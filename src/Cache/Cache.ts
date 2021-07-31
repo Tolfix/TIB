@@ -1,13 +1,18 @@
 import fetch from "node-fetch";
 import { Github_API, Github_Client_Id, Github_Client_Secret, Github_Org } from "../Config";
 import UserModel from "../Database/Schemes/User";
+import { IC_Sponsor } from "../Interfaces/Cache/Cache_Sponsor";
 import { IC_User } from "../Interfaces/Cache/Cache_User";
 import { Contributor } from "../Interfaces/Github/Contributors";
 import { Repository } from "../Interfaces/Github/Repository";
-import { IUser, IUserSchema } from "../Interfaces/Users";
+import { IUser, IUserSchema } from "../Interfaces/Database/Users";
 import log from "../Lib/Logger";
+import { ISponsor } from "../Interfaces/Github/Sponsor";
+import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
+import SponsorModel from "../Database/Schemes/Sponsors";
     
 export const User = new Map<IC_User, IUser>();
+export const Sponsor = new Map<IC_Sponsor, ISponsor>();
 export const Respositories = new Map<string, Repository>();
 
 function getFromDiscordId(discord_id: string)
@@ -39,6 +44,18 @@ function ContributedTo(userId: number)
     return contributedto
 }
 
+async function CacheSponsor(sponsor: ISponsorSchema)
+{
+    log.info(`Caching sponsor`, sponsor.github_id);
+    Sponsor.set(sponsor.github_id, {
+        github_id: sponsor.github_id,
+        tier: sponsor.tier
+    });
+
+    if(!Sponsor.get(sponsor.github_id))
+        CacheSponsor(sponsor);
+}
+
 async function CacheUser(user: IUserSchema)
 {
     log.info(`Caching user`, user.github_id, user.email);
@@ -52,7 +69,19 @@ async function CacheUser(user: IUserSchema)
     });
 
     if(!User.get(user.github_id))
-        CacheUser(user)
+        CacheUser(user);
+}
+
+async function CacheSponsors()
+{
+    SponsorModel.find().then(sponsors => {
+        for(const sponsor of sponsors)
+        {
+            CacheSponsor(sponsor);
+        }
+
+        return Promise.resolve(true);
+    });
 }
 
 async function CacheUsers()
@@ -96,8 +125,11 @@ async function CacheGithub()
 
 const CacheClient = {
     User,
+    Sponsor,
     Respositories,
     CacheGithub,
+    CacheSponsor,
+    CacheSponsors,
     CacheUser,
     CacheUsers,
     ContributedTo,
