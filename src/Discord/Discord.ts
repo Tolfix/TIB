@@ -168,11 +168,9 @@ export default class DiscordClient
         });
 
         this.client.on("guildMemberAdd", (member) => {
-            console.log("hello?")
             GuildMemberAddHandler(this.client, member);
         });
 
         this.client.login(Discord_Token);
     }
-
 }

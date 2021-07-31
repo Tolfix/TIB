@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
 import UserModel from "../../Database/Schemes/User";
-import { IUser, IUserSchema } from "../../Interfaces/Users";
+import { IUser, IUserSchema } from "../../Interfaces/Database/Users";
 import { API_Error } from "../JSON/Response";
 import CacheClient from "../../Cache/Cache";
 

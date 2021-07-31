@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { Repository } from "./Github/Repository";
+import { Repository } from "../Github/Repository";
 
 export interface IUserSchema extends Document, IUser {}
 

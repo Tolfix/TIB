@@ -12,7 +12,10 @@ CronHandler();
 new Mongo_Database();
 
 log.info(`Caching..`)
-CacheClient.CacheGithub().then(() => {
+CacheClient.CacheGithub().then(async () => {
+
+    CacheClient.CacheSponsors();
+
     CacheClient.CacheUsers().then(() => {
         log.info(`Caching done.`);
         new DiscordClient();
