@@ -8,6 +8,7 @@ import UserModel from "../../Database/Schemes/User";
 import { IUser, IUserSchema } from "../../Interfaces/Database/Users";
 import { API_Error } from "../JSON/Response";
 import CacheClient from "../../Cache/Cache";
+import log from "../../Lib/Logger";
 
 export default class Oauth2Router
 {
@@ -61,9 +62,11 @@ export default class Oauth2Router
             });
 
             // Adds the user to our discord server.
-            (await this.client.guilds.fetch(Discord_Guild_Id)).addMember(discord.id, {
+            // ! fix this, currently not adding the user to the guild.
+            // ! Unsure why it won't add the user either, maybe the accessToken or something.
+            (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
                 accessToken: req?.session.discord_token ?? "",
-            });
+            }).then((user) => log.info(`Added user ${user.user.id} to the guild.`));
 
             res.redirect("https://github.com/Tolfix");
         });
