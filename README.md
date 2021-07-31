@@ -18,8 +18,8 @@ Join our [`discord server`](https://discord.com/invite/xHde7g93Yh) to know more.
 # ⭐ | DMCD
 T.I.B uses [`DMCD`](https://github.com/Tolfix/dmcd) to auto deploy applications.
 # 👀 | Keeps tracks of
-- [ ] Sponsors
-- [ ] Disocrd users
+- [X] Sponsors
+- [X] Disocrd users
 - [ ] Github
 - [ ] Status reports
 
