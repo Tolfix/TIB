@@ -24,10 +24,22 @@ const Logger = {
         console.log(time + " | " + colors.blue(`dis`)+colors.magenta(`cord: `), ...body)
     },
 
+    api: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.green(`API: `), ...body)
+    },
+
+    cache: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.magenta(`cach`)+colors.yellow("e: "), ...body)
+    },
+
     rainbow: <T extends any[]> (...body: T) => {
         let time = getTime();
 
-        console.log(time + " | " + colors.rainbow(`rainbow`), ...body)
+        console.log(time + " | " + colors.rainbow(`rainbow: `), ...body)
     },
 
     verbos: <T extends any[]> (...body: T) => {

@@ -45,7 +45,7 @@ function ContributedTo(userId: number)
 
 async function CacheSponsor(sponsor: ISponsorSchema)
 {
-    Logger.info(`Caching sponsor`, sponsor.github_id);
+    Logger.cache(`Caching sponsor`, sponsor.github_id);
     Sponsor.set(sponsor.github_id, {
         github_id: sponsor.github_id,
         tier: sponsor.tier
@@ -57,7 +57,7 @@ async function CacheSponsor(sponsor: ISponsorSchema)
 
 async function CacheUser(user: IUserSchema)
 {
-    Logger.info(`Caching user | id: `, user.github_id, " | email: ", user.email);
+    Logger.cache(`Caching user | id: `, user.github_id, " | email: ", user.email);
     User.set(user.github_id, {
         discord_id: user.discord_id,
         // discord_email: user.email,
@@ -119,7 +119,7 @@ async function CacheGithub()
             owner: repo.owner.login
         }
 
-        Logger.info(`Caching ${repo.name} with value` , data);
+        Logger.cache(`Caching ${repo.name} with value` , data);
 
         Respositories.set(repo.name, data);
     }

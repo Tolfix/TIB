@@ -36,7 +36,7 @@ export default class Oauth2Router
             // ! Unsure why it won't add the user either, maybe the accessToken or something.
             (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
                 accessToken: req?.session.discord_token ?? "",
-            }).then((user) => Logger.info(`Added user ${user.user.id} to the guild.`));
+            }).then((user) => Logger.discord(`Added user ${user.user.id} to the guild.`));
 
             if(!req.session.github_token)
                 return res.redirect("/oauth2/github");
