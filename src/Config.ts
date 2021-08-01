@@ -38,3 +38,11 @@ export const Github_API = "https://api.github.com/";
 */
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const DebugMode = process.env.DEBUG ?? false;
+
+/*
+ * Colors 
+ */
+export const Color_Main = "#e1e5f0";
+export const Color_Green = "#8fefb1";
+export const Color_Purple = "#cf69e9";
+export const Color_Pink = "#fde8f3";

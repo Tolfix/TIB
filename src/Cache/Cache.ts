@@ -10,6 +10,7 @@ import Logger from "../Lib/Logger";
 import { ISponsor } from "../Interfaces/Github/Sponsor";
 import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
 import SponsorModel from "../Database/Schemes/Sponsors";
+import { Contribution } from "../Interfaces/Github/Contribution";
     
 export const User = new Map<IC_User, IUser>();
 export const Sponsor = new Map<IC_Sponsor, ISponsor>();
@@ -25,7 +26,7 @@ function getFromDiscordId(discord_id: string)
 
 function ContributedTo(userId: number)
 {
-    let contributedto: Repository[] = [];
+    let contributedto: Contribution[] = [];
             
     for (const [key, value] of Respositories.entries()) {
         if(value.contributors.length > 0)
@@ -34,7 +35,11 @@ function ContributedTo(userId: number)
             {
                 if(contributor.author.id === userId)
                 {
-                    contributedto.push(value);
+                    contributedto.push({
+                        name: value.name,
+                        owner: value.owner,
+                        contributed: contributor
+                    });
                 }
             }
         }
@@ -45,7 +50,7 @@ function ContributedTo(userId: number)
 
 async function CacheSponsor(sponsor: ISponsorSchema)
 {
-    Logger.info(`Caching sponsor`, sponsor.github_id);
+    Logger.cache(`Caching sponsor`, sponsor.github_id);
     Sponsor.set(sponsor.github_id, {
         github_id: sponsor.github_id,
         tier: sponsor.tier
@@ -57,7 +62,7 @@ async function CacheSponsor(sponsor: ISponsorSchema)
 
 async function CacheUser(user: IUserSchema)
 {
-    Logger.info(`Caching user | id: `, user.github_id, " | email: ", user.email);
+    Logger.cache(`Caching user | id: `, user.github_id, " | email: ", user.email);
     User.set(user.github_id, {
         discord_id: user.discord_id,
         // discord_email: user.email,
@@ -119,7 +124,7 @@ async function CacheGithub()
             owner: repo.owner.login
         }
 
-        Logger.info(`Caching ${repo.name} with value` , data);
+        Logger.cache(`Caching ${repo.name} with value` , data);
 
         Respositories.set(repo.name, data);
     }
