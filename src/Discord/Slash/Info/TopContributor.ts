@@ -4,6 +4,7 @@ import { TextChannel } from "discord.js";
 import { Client } from "discord.js";
 import { ApplicationCommandInteractionDataOption, Interaction } from "slash-commands";
 import CacheClient from "../../../Cache/Cache";
+import { Color_Main } from "../../../Config";
 import SlashReply from "../../../Lib/Discord/SlashReply";
 import Logger from "../../../Lib/Logger";
 import Slash from "../../Struct/Slash";
@@ -60,13 +61,13 @@ export default class TicketSetup extends Slash
         
         for (let [key, value] of users)
         {
-            tops += `**${count}** => ${value.name} : \`${value.total}\`\n`
+            tops += `#**${count}** | ${value.name} : \`${value.total}\`\n`
         }
         
         const embed = new MessageEmbed()
         .setTitle("Top Contributors")
         .setDescription(tops)
-        .setColor("")
+        .setColor(Color_Main)
         .setThumbnail("https://cdn.tolfix.com/images/TX-Small.png")
 
         sr.reply(embed);
