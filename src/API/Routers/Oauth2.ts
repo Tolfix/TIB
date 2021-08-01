@@ -28,6 +28,13 @@ export default class Oauth2Router
         this.router.get("/link", async (req, res) => {
             if(!req.session.discord_token)
                 return res.redirect("/oauth2/discord")
+            
+            // Adds the user to our discord server.
+            // ! fix this, currently not adding the user to the guild.
+            // ! Unsure why it won't add the user either, maybe the accessToken or something.
+            (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
+                accessToken: req?.session.discord_token ?? "",
+            }).then((user) => log.info(`Added user ${user.user.id} to the guild.`));
 
             if(!req.session.github_token)
                 return res.redirect("/oauth2/github");
@@ -60,13 +67,6 @@ export default class Oauth2Router
                 github_id: github.github_id,
                 contributedTo: CacheClient.ContributedTo(github.github_id),
             });
-
-            // Adds the user to our discord server.
-            // ! fix this, currently not adding the user to the guild.
-            // ! Unsure why it won't add the user either, maybe the accessToken or something.
-            (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
-                accessToken: req?.session.discord_token ?? "",
-            }).then((user) => log.info(`Added user ${user.user.id} to the guild.`));
 
             res.redirect("https://github.com/Tolfix");
         });
