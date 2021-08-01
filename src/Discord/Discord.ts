@@ -126,7 +126,7 @@ export default class DiscordClient
         discord_button(this.client);
 
         this.client.on("ready", () => {
-            Logger.verbos(`Discord client ready.`)
+            Logger.discord(`Discord client ready.`)
             this.client.user?.setPresence({
                 status: "dnd",
                 activity: {

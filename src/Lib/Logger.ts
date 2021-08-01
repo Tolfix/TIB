@@ -18,6 +18,18 @@ const Logger = {
         }
     },
 
+    discord: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.blue(`dis`)+colors.magenta(`cord: `), ...body)
+    },
+
+    rainbow: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.rainbow(`rainbow`), ...body)
+    },
+
     verbos: <T extends any[]> (...body: T) => {
         let time = getTime();
 
