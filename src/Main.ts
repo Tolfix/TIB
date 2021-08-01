@@ -11,7 +11,7 @@ CronHandler();
 
 new Mongo_Database();
 
-log.info(`Caching..`)
+log.info(`Caching..`);
 CacheClient.CacheGithub().then(async () => {
 
     CacheClient.CacheSponsors();
