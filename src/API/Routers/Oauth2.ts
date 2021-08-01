@@ -34,7 +34,7 @@ export default class Oauth2Router
             // Adds the user to our discord server.
             // ! fix this, currently not adding the user to the guild.
             // ! Unsure why it won't add the user either, maybe the accessToken or something.
-            (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
+            (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(await this.client.users?.fetch(discord.id), {
                 accessToken: req?.session.discord_token ?? "",
             }).then((user) => Logger.discord(`Added user ${user.user.id} to the guild.`));
 
