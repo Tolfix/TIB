@@ -4,20 +4,20 @@ import Check from "./Check";
 import CronHandler from "./Cron/CronHandler";
 import Mongo_Database from "./Database/Mongo";
 import DiscordClient from "./Discord/Discord";
-import log from "./Lib/Logger";
+import Logger from "./Lib/Logger";
 
 Check();
 CronHandler();
 
 new Mongo_Database();
 
-log.info(`Caching..`);
+Logger.info(`Caching..`);
 CacheClient.CacheGithub().then(async () => {
 
     CacheClient.CacheSponsors();
 
     CacheClient.CacheUsers().then(() => {
-        log.info(`Caching done.`);
+        Logger.info(`Caching done.`);
         new DiscordClient();
     });
 });

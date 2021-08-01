@@ -6,7 +6,7 @@ import { IC_User } from "../Interfaces/Cache/Cache_User";
 import { Contributor } from "../Interfaces/Github/Contributors";
 import { Repository } from "../Interfaces/Github/Repository";
 import { IUser, IUserSchema } from "../Interfaces/Database/Users";
-import log from "../Lib/Logger";
+import Logger from "../Lib/Logger";
 import { ISponsor } from "../Interfaces/Github/Sponsor";
 import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
 import SponsorModel from "../Database/Schemes/Sponsors";
@@ -45,7 +45,7 @@ function ContributedTo(userId: number)
 
 async function CacheSponsor(sponsor: ISponsorSchema)
 {
-    log.info(`Caching sponsor`, sponsor.github_id);
+    Logger.info(`Caching sponsor`, sponsor.github_id);
     Sponsor.set(sponsor.github_id, {
         github_id: sponsor.github_id,
         tier: sponsor.tier
@@ -57,7 +57,7 @@ async function CacheSponsor(sponsor: ISponsorSchema)
 
 async function CacheUser(user: IUserSchema)
 {
-    log.info(`Caching user | id: `, user.github_id, " | email: ", user.email);
+    Logger.info(`Caching user | id: `, user.github_id, " | email: ", user.email);
     User.set(user.github_id, {
         discord_id: user.discord_id,
         // discord_email: user.email,
@@ -119,7 +119,7 @@ async function CacheGithub()
             owner: repo.owner.login
         }
 
-        log.info(`Caching ${repo.name} with value` , data);
+        Logger.info(`Caching ${repo.name} with value` , data);
 
         Respositories.set(repo.name, data);
     }

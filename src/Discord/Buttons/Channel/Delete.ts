@@ -1,7 +1,7 @@
 import { MessageButton, MessageComponent } from "discord-buttons";
 import { Discord_Ticket_Parent_Id } from "../../../Config";
 import { ButtonIds } from "../../../Interfaces/Discord/ButtonsIds";
-import log from "../../../Lib/Logger";
+import Logger from "../../../Lib/Logger";
 import Button from "../../Struct/Button";
 
 export default class DeleteChannelButton extends Button

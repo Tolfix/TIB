@@ -2,7 +2,7 @@ import colors from "colors";
 import { DebugMode } from "../Config";
 import { getTime } from "./Time";
 
-const log = {
+const Logger = {
     trace: () => {
         let err = new Error();
         let lines = err.stack?.split("\n");
@@ -43,4 +43,4 @@ const log = {
     },
 }
 
-export default log;
+export default Logger;

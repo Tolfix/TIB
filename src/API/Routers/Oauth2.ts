@@ -8,7 +8,7 @@ import UserModel from "../../Database/Schemes/User";
 import { IUser, IUserSchema } from "../../Interfaces/Database/Users";
 import { API_Error } from "../JSON/Response";
 import CacheClient from "../../Cache/Cache";
-import log from "../../Lib/Logger";
+import Logger from "../../Lib/Logger";
 
 export default class Oauth2Router
 {
@@ -36,7 +36,7 @@ export default class Oauth2Router
             // ! Unsure why it won't add the user either, maybe the accessToken or something.
             (this.client.guilds.cache.get(Discord_Guild_Id))?.addMember(discord.id, {
                 accessToken: req?.session.discord_token ?? "",
-            }).then((user) => log.info(`Added user ${user.user.id} to the guild.`));
+            }).then((user) => Logger.info(`Added user ${user.user.id} to the guild.`));
 
             if(!req.session.github_token)
                 return res.redirect("/oauth2/github");
