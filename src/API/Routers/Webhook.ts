@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import OAuth2 from "../Struct/Oauth2";
 import AW from "../../Lib/AW";
 import CacheClient from "../../Cache/Cache";
-import log from "../../Lib/Logger";
+import Logger from "../../Lib/Logger";
 import simpleGithub from "simple-webhook-github";
 import { Github_Secrets_Sponsorship } from "../../Config";
 import SponsorModel from "../../Database/Schemes/Sponsors";
@@ -49,13 +49,13 @@ export default class WebhookRouter
         this.server.use("/webhook", this.router);
 
         // this.router.post("/github/sponsors", bodyParser.raw({type: 'application/json'}), (req, res) => {
-        //     log.info(`A new sponsorship`);
+        //     Logger.info(`A new sponsorship`);
 
         //     const body = req.body;
         //     const sponsor = body.sponsor;
 
         //     if(!sponsor)
-        //         return log.error(`No sponsor found!`);
+        //         return Logger.error(`No sponsor found!`);
 
         //     const sponsor_id = sponsor.id as number;
         //     const tier = body.tier;

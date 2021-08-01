@@ -9,6 +9,6 @@ export interface IUser
     github_id: number;
     github_email: string;
     discord_id: string;
-    discord_email: string;
+    // discord_email: string;
     contributedTo: Repository[] | undefined;
 }

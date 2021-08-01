@@ -5,12 +5,10 @@ import { APIUser } from "../../Interfaces/Discord/APIUser";
 import { Github_APIUser } from "../../Interfaces/Github/APIUser";
 
 export default class OAuth2 {
-    protected guilds: object | any;
     protected client: Client;
 
     public constructor(client: Client) {
         this.client = client;
-        this.guilds = new Object();
     }
 
     public async Discord_resolveInformation(req: Request): Promise<APIUser> {
@@ -31,25 +29,6 @@ export default class OAuth2 {
         if(!user.id) {
             //@ts-ignore
             return null;
-        } 
-
-        if(!this.guilds[user.id]) {
-            const guildReq = await fetch("https://discord.com/api/users/@me/guilds", {
-                headers: {
-                    "Authorization": `Bearer ${req.session.discord_token}}`
-                }
-            })
-
-            const guildsRes = await guildReq.json();
-
-            if(guildsRes.code !== 0)
-            {
-                this.guilds[user.id] = guildsRes;
-            }
-
-            setTimeout(() => {
-                delete this.guilds[user.id];
-            }, 3e5)
         }
 
         return {
@@ -57,7 +36,7 @@ export default class OAuth2 {
             username: user.username,
             discriminator: user.discriminator,
             avatar: user.avatar,
-            email: user.email,
+            // email: user.email,
         }
     }
 

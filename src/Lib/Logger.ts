@@ -2,7 +2,7 @@ import colors from "colors";
 import { DebugMode } from "../Config";
 import { getTime } from "./Time";
 
-const log = {
+const Logger = {
     trace: () => {
         let err = new Error();
         let lines = err.stack?.split("\n");
@@ -16,6 +16,18 @@ const log = {
 
             console.log(time + " | " + colors.cyan(`debug: `), ...body)
         }
+    },
+
+    discord: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.blue(`dis`)+colors.magenta(`cord: `), ...body)
+    },
+
+    rainbow: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.rainbow(`rainbow`), ...body)
     },
 
     verbos: <T extends any[]> (...body: T) => {
@@ -43,4 +55,4 @@ const log = {
     },
 }
 
-export default log;
+export default Logger;

@@ -6,7 +6,7 @@ import { IC_User } from "../Interfaces/Cache/Cache_User";
 import { Contributor } from "../Interfaces/Github/Contributors";
 import { Repository } from "../Interfaces/Github/Repository";
 import { IUser, IUserSchema } from "../Interfaces/Database/Users";
-import log from "../Lib/Logger";
+import Logger from "../Lib/Logger";
 import { ISponsor } from "../Interfaces/Github/Sponsor";
 import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
 import SponsorModel from "../Database/Schemes/Sponsors";
@@ -28,7 +28,6 @@ function ContributedTo(userId: number)
     let contributedto: Repository[] = [];
             
     for (const [key, value] of Respositories.entries()) {
-        log.debug(value)
         if(value.contributors.length > 0)
         {
             for(const contributor of value.contributors)
@@ -46,7 +45,7 @@ function ContributedTo(userId: number)
 
 async function CacheSponsor(sponsor: ISponsorSchema)
 {
-    log.info(`Caching sponsor`, sponsor.github_id);
+    Logger.info(`Caching sponsor`, sponsor.github_id);
     Sponsor.set(sponsor.github_id, {
         github_id: sponsor.github_id,
         tier: sponsor.tier
@@ -58,10 +57,10 @@ async function CacheSponsor(sponsor: ISponsorSchema)
 
 async function CacheUser(user: IUserSchema)
 {
-    log.info(`Caching user`, user.github_id, user.email);
+    Logger.info(`Caching user | id: `, user.github_id, " | email: ", user.email);
     User.set(user.github_id, {
         discord_id: user.discord_id,
-        discord_email: user.email,
+        // discord_email: user.email,
         email: user.email,
         github_email: user.email,
         github_id: user.github_id,
@@ -114,11 +113,15 @@ async function CacheGithub()
             }
         })).json() as Array<Contributor>
 
-        Respositories.set(repo.name, {
+        let data = {
             contributors: Contri,
             name: repo.name,
             owner: repo.owner.login
-        });
+        }
+
+        Logger.info(`Caching ${repo.name} with value` , data);
+
+        Respositories.set(repo.name, data);
     }
     Promise.resolve(true);
 }

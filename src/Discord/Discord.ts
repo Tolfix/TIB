@@ -10,7 +10,7 @@ import Button from "./Struct/Button";
 import Slash from "./Struct/Slash";
 import SlashHandler from "./Handlers/SlashHandler";
 import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
-import log from "../Lib/Logger";
+import Logger from "../Lib/Logger";
 
 declare module 'discord.js' 
 {
@@ -126,7 +126,7 @@ export default class DiscordClient
         discord_button(this.client);
 
         this.client.on("ready", () => {
-            log.verbos(`Discord client ready.`)
+            Logger.discord(`Discord client ready.`)
             this.client.user?.setPresence({
                 status: "dnd",
                 activity: {

@@ -2,7 +2,7 @@ import { Client, Guild, TextChannel } from "discord.js";
 import { Discord_Guild_Id, Discord_Client_Id, Discord_Public_Key, Discord_Token, HomeDir } from "../../Config";
 import { ApplicationCommandOptionValue, DiscordInteractions, Interaction } from "slash-commands";
 import { GuildMember } from "discord.js";
-import log from "../../Lib/Logger";
+import Logger from "../../Lib/Logger";
 import AW from "../../Lib/AW";
 import { readdirSync } from "fs";
 import SlashReply from "../../Lib/Discord/SlashReply";
@@ -39,7 +39,7 @@ export default async function SlashHandler(client: Client)
                 client.slash.set(pull.name, pull);
                 const [Data, C_Error] = await AW(interaction.createApplicationCommand(pull.options, Discord_Guild_Id))
                 if(C_Error)
-                    log.error(`${C_Error}`)
+                    Logger.error(`${C_Error}`)
             }
             continue;
         }
