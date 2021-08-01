@@ -4,8 +4,8 @@ import Logger from "../Lib/Logger";
 
 export default function ReCache()
 {
-    // Every day at midnight
-    new CronJob("0 0 * * *", () => {
+    // Every hour
+    new CronJob("0 * * * *", () => {
         Logger.info(`Re Caching..`)
         CacheClient.CacheGithub().then(() => {
             CacheClient.CacheUsers().then(() => {
