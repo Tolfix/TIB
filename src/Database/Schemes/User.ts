@@ -21,10 +21,10 @@ const UserSchema = new Schema
             type: String,
             required: true
         },
-        discord_email: {
-            type: String,
-            required: true
-        },
+        // discord_email: {
+        //     type: String,
+        //     required: true
+        // },
 
     }
 );

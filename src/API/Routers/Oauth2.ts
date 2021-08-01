@@ -53,7 +53,7 @@ export default class Oauth2Router
             // Assuming no user.
             new UserModel(<IUser>{
                 discord_id: discord.id,
-                discord_email: discord.email,
+                // discord_email: discord.email,
                 email: github.email,
                 github_email: github.email,
                 github_id: github.github_id,
@@ -62,7 +62,7 @@ export default class Oauth2Router
 
             CacheClient.User.set(github.github_id, {
                 discord_id: discord.id,
-                discord_email: discord.email,
+                // discord_email: discord.email,
                 email: github.email,
                 github_email: github.email,
                 github_id: github.github_id,
@@ -74,7 +74,7 @@ export default class Oauth2Router
 
         this.router.get("/discord", (req, res) => {
             let callbackURL = `${Express_DOMAIN}/oauth2/discord/callback`;
-            let discord_uri = `https://discord.com/oauth2/authorize?client_id=${Discord_Client_Id}&redirect_uri=${encodeURIComponent(callbackURL)}&response_type=code&scope=${encodeURIComponent("identify guilds.join email")}`
+            let discord_uri = `https://discord.com/oauth2/authorize?client_id=${Discord_Client_Id}&redirect_uri=${encodeURIComponent(callbackURL)}&response_type=code&scope=${encodeURIComponent("identify guilds.join")}`
 
             return res.redirect(discord_uri);
         });
