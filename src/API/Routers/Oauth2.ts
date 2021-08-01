@@ -27,7 +27,9 @@ export default class Oauth2Router
 
         this.router.get("/link", async (req, res) => {
             if(!req.session.discord_token)
-                return res.redirect("/oauth2/discord")
+                return res.redirect("/oauth2/discord");
+            
+            const discord = await this.oauth.Discord_resolveInformation(req);
             
             // Adds the user to our discord server.
             // ! fix this, currently not adding the user to the guild.
@@ -39,7 +41,6 @@ export default class Oauth2Router
             if(!req.session.github_token)
                 return res.redirect("/oauth2/github");
 
-            const discord = await this.oauth.Discord_resolveInformation(req);
             const github = await this.oauth.Github_resolveInformation(req);
 
             const User = CacheClient.User.get(github.github_id);
