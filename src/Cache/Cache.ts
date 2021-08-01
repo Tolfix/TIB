@@ -10,6 +10,7 @@ import Logger from "../Lib/Logger";
 import { ISponsor } from "../Interfaces/Github/Sponsor";
 import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
 import SponsorModel from "../Database/Schemes/Sponsors";
+import { Contribution } from "../Interfaces/Github/Contribution";
     
 export const User = new Map<IC_User, IUser>();
 export const Sponsor = new Map<IC_Sponsor, ISponsor>();
@@ -25,7 +26,7 @@ function getFromDiscordId(discord_id: string)
 
 function ContributedTo(userId: number)
 {
-    let contributedto: Repository[] = [];
+    let contributedto: Contribution[] = [];
             
     for (const [key, value] of Respositories.entries()) {
         if(value.contributors.length > 0)
@@ -34,7 +35,11 @@ function ContributedTo(userId: number)
             {
                 if(contributor.author.id === userId)
                 {
-                    contributedto.push(value);
+                    contributedto.push({
+                        name: value.name,
+                        owner: value.owner,
+                        contributed: contributor
+                    });
                 }
             }
         }
