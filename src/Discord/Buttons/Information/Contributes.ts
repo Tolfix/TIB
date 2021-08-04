@@ -32,8 +32,8 @@ export default class DeleteChannelButton extends Button
         const embed = new MessageEmbed()
         .setTitle(`Total contributes on each repository`)
         .setDescription(data)
-        .setDescription(`
-        Total contributes: ${user.contributedTo.map(e => e.contributed.total).reduce((a,b) => a+b)}
+        .addField("Total contributes",`
+        ${user.contributedTo.map(e => e.contributed.total).reduce((a,b) => a+b)}
         `)
         .setColor(Color_Green);
 
