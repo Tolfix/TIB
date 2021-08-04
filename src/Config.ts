@@ -43,7 +43,7 @@ export const CDN_TX_Image = "https://cdn.tolfix.com/images/TX-Small.png"
 */
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const DebugMode = process.env.DEBUG ?? false;
-export const Version = "1.1.6";
+export const Version = "1.1.7";
 
 /*
  * Colors 
