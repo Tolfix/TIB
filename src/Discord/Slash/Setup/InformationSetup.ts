@@ -4,7 +4,7 @@ import { Guild, GuildMember, MessageEmbed } from "discord.js";
 import { TextChannel } from "discord.js";
 import { Client } from "discord.js";
 import { ApplicationCommandInteractionDataOption, Interaction } from "slash-commands";
-import { Color_Main } from "../../../Config";
+import { Color_Main, Github_Org } from "../../../Config";
 import CreateButton from "../../../Lib/Discord/CreateButton";
 import SlashReply from "../../../Lib/Discord/SlashReply";
 import Slash from "../../Struct/Slash";
@@ -66,6 +66,11 @@ export default class TicketSetup extends Slash
                         emoji: `🔗`,
                         url: "https://tib.tolfix.com/oauth2/link"
                     },
+                    {
+                        name: "Sponsor us!",
+                        emoji: "🎊",
+                        url: `https://github.com/sponsors/${Github_Org}`
+                    }
                 ),
                 CreateButton(
                     {
@@ -73,6 +78,12 @@ export default class TicketSetup extends Slash
                         emoji: `🌟`,
                         style: "blurple",
                         id: "user_contributes"
+                    },
+                    {
+                        name: "My sponsor",
+                        emoji: `🌟`,
+                        style: "green",
+                        id: "user_sponsor"
                     }
                 )
             ]
