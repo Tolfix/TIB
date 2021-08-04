@@ -1,15 +1,16 @@
+import { stripIndent } from "common-tags";
 import { MessageButton, MessageComponent } from "discord-buttons";
 import { MessageEmbed } from "discord.js";
 import CacheClient from "../../../Cache/Cache";
-import { Color_Green, Github_Org } from "../../../Config";
+import { CDN_TX_Image, Color_Green, Color_Purple, Github_Org } from "../../../Config";
 import { ButtonIds } from "../../../Interfaces/Discord/ButtonsIds";
-import { Quick_Link_Github_Button } from "../../../Lib/Discord/QuickButton";
+import { Quick_Link_Github_Button, Quick_Sponsor_Github_Button } from "../../../Lib/Discord/QuickButton";
 import Logger from "../../../Lib/Logger";
 import Button from "../../Struct/Button";
 
 export default class DeleteChannelButton extends Button
 {
-    public id = "user_contributes";
+    public id = "user_sponsor";
     public run(button: MessageComponent)
     {
         const userCache = CacheClient.getFromDiscordId(button.clicker.id);
@@ -20,22 +21,23 @@ export default class DeleteChannelButton extends Button
         if(!user)
             return;
 
-        if(!user.contributedTo)
-            return button.reply.send(`You haven't contributed to any repositories from \`${Github_Org}\`!`, { ephemeral: true });
+        const sponsor = CacheClient.Sponsor.get(user.github_id);
 
-        let data = ``;
-        for(const contri of user.contributedTo)
-        {
-            data += `**${contri.owner}/${contri.name}** : ${contri.contributed.total}\n`
-        }
+        if(!sponsor)
+            return button.reply.send(
+                stripIndent`Looks like you are not a sponsor!
+                *are you sure you are a sponsor contact the owner to resolve!*`
+                , { ephemeral: true, component: Quick_Sponsor_Github_Button }
+            )
 
         const embed = new MessageEmbed()
-        .setTitle(`Total contributes on each repository`)
-        .setDescription(data)
-        .addField("Total contributes",`
-        ${user.contributedTo.map(e => e.contributed.total).reduce((a,b) => a+b)}
+        .addField(sponsor.tier.name, stripIndent`
+        Sponsored us at \`${sponsor.tier.created_at}\`
+        Donated \`$${sponsor.tier.monthly_price_in_dollars}\`
         `)
-        .setColor(Color_Green);
+        .setColor(Color_Purple)
+        .setTimestamp()
+        .setThumbnail(CDN_TX_Image)
 
         return button.reply.send(embed, { ephemeral: true });
     }
