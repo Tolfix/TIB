@@ -4,6 +4,7 @@ import { Guild, GuildMember, MessageEmbed } from "discord.js";
 import { TextChannel } from "discord.js";
 import { Client } from "discord.js";
 import { ApplicationCommandInteractionDataOption, Interaction } from "slash-commands";
+import { Color_Main } from "../../../Config";
 import CreateButton from "../../../Lib/Discord/CreateButton";
 import SlashReply from "../../../Lib/Discord/SlashReply";
 import Slash from "../../Struct/Slash";
@@ -41,8 +42,8 @@ export default class TicketSetup extends Slash
         let channel = guild.channels.cache.get(channelId) as TextChannel;
             
         const embed = new MessageEmbed()
-        .setColor("")
-        .setFooter("")
+        .setColor(Color_Main)
+        .setFooter("Tolfix information")
         .setThumbnail("https://cdn.tolfix.com/images/TX-Small.png")
         .setTitle("General information")
         .addField("Information", stripIndent`
