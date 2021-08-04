@@ -34,6 +34,11 @@ export const Github_Org = "Tolfix";
 export const Github_API = "https://api.github.com/";
 
 /*
+* CDN
+*/
+export const CDN_TX_Image = "https://cdn.tolfix.com/images/TX-Small.png"
+
+/*
 * General
 */
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
