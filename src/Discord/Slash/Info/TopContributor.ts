@@ -62,6 +62,7 @@ export default class TicketSetup extends Slash
         for (let [key, value] of users)
         {
             tops += `#**${count}** | ${value.name} : \`${value.total}\`\n`
+            count++;
         }
         
         const embed = new MessageEmbed()
