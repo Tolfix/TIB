@@ -103,12 +103,14 @@ async function CacheUsers()
 async function CacheGithub()
 {
     // Get all of our repos
-    const Repos = await (await fetch(`${Github_API}orgs/${Github_Org}/repos`, {
+    const Repos = (await (await fetch(`${Github_API}orgs/${Github_Org}/repos`, {
         headers: {
             authorization: `Basic ${Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`).toString("base64")}`
         }
-    })).json() as Array<any>;
+    })).json()).filter((e: any) => !e.fork) as Array<any>;
     
+    // Logger.cache(Repos)
+
     for await(let repo of Repos)
     {
         // Get contributors
