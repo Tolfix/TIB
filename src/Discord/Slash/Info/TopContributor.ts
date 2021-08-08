@@ -53,7 +53,7 @@ export default class TicketSetup extends Slash
         }
 
         users[Symbol.iterator] = function* () {
-            yield* [...this.entries()].sort((a, b) => a[1].total - b[1].total);
+            yield* [...this.entries()].sort((a, b) => b[1].total - a[1].total);
         }
 
         let tops = ``;
