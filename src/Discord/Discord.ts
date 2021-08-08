@@ -12,6 +12,7 @@ import SlashHandler from "./Handlers/SlashHandler";
 import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
 import Logger from "../Lib/Logger";
 import LevelUpSystem from "./Handlers/LevelUpSystem";
+import HandleSetup from "./Handlers/HandleSetup";
 
 declare module 'discord.js' 
 {
@@ -127,6 +128,7 @@ export default class DiscordClient
         discord_button(this.client);
 
         this.client.on("ready", () => {
+            HandleSetup(this.client);
             Logger.discord(`Discord client ready.`)
             this.client.user?.setPresence({
                 status: "dnd",

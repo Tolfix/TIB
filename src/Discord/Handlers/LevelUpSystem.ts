@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import CacheClient from "../../Cache/Cache";
 import Logger from "../../Lib/Logger";
+import LevelUpManager from "../../Manager/Discord/LevelUpManager";
 
 export default function LevelUpSystem(message: Message): void
 {
@@ -19,7 +20,7 @@ export default function LevelUpSystem(message: Message): void
 
     // Logic now ;(
     
-    let amountOfMessagesToNextLeveL = 10;
+    let amountOfMessagesToNextLeveL = 500;
     let xp = cache.xp;
     let level = cache.level;
     let newXp = xp+1;
@@ -28,10 +29,14 @@ export default function LevelUpSystem(message: Message): void
     {
         Logger.discord(`User ${author.username} (${author.id}) leveled up`);
         level = (parseInt(level)+1).toString();
-        message.react("✔");
+        message.react(message.guild?.emojis.cache.find(e => e.name === "bock") ?? "");
     }
 
-    // GiveUserRoleIfLevelUp
+    LevelUpManager(message, {
+        discord_id: cache.discord_id,
+        xp: newXp,
+        level
+    });
 
     CacheClient.DiscordUserLevel.set(author.id, {
         discord_id: author.id,
