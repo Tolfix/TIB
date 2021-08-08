@@ -13,6 +13,7 @@ export interface IENV
 
     GITHUB_CLIENT_ID: string;
     GITHUB_CLIENT_SECRET: string;
+    GITHUB_SECRETS_SPONSOR: string;
 
     DEBUG?: string;
 }

@@ -15,6 +15,7 @@ Logger.info(`Caching..`);
 CacheClient.CacheGithub().then(async () => {
 
     CacheClient.CacheSponsors();
+    CacheClient.CacheDiscordUserLevels();
 
     CacheClient.CacheUsers().then(() => {
         Logger.info(`Caching done.`);

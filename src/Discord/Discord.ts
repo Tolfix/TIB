@@ -11,6 +11,8 @@ import Slash from "./Struct/Slash";
 import SlashHandler from "./Handlers/SlashHandler";
 import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
 import Logger from "../Lib/Logger";
+import LevelUpSystem from "./Handlers/LevelUpSystem";
+import HandleSetup from "./Handlers/HandleSetup";
 
 declare module 'discord.js' 
 {
@@ -126,6 +128,7 @@ export default class DiscordClient
         discord_button(this.client);
 
         this.client.on("ready", () => {
+            HandleSetup(this.client);
             Logger.discord(`Discord client ready.`)
             this.client.user?.setPresence({
                 status: "dnd",
@@ -140,6 +143,7 @@ export default class DiscordClient
         this.client.on("message", (message) => {
             if (message.author.bot) return;
             if (!message.guild) return;
+            LevelUpSystem(message);
             if (!message.content.startsWith(Prefix)) return;
     
             const args = message.content.slice(Prefix.length).trim().split(/ +/g);

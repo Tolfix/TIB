@@ -1,3 +1,5 @@
+import { Role } from "discord.js";
+
 /*
 *   Discord
 */
@@ -8,6 +10,7 @@ export const Discord_Guild_Id = "833438897484595230";
 export const Discord_Public_Key = "b7e1889432f44a4f8c88bcacfbfbe145e45a4fe4138fcd24cc1a6b315f000999";
 export const Discord_Ticket_Parent_Id = "870276061261336616"
 export const Discord_Member_Role_Id = "870570341024542781";
+export const Discord_LevelUp_Roles = new Map<string, Role>();
 export const Prefix = process.env.PREFIX ?? "tib ";
 
 /*
