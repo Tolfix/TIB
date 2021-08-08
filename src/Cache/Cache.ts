@@ -11,8 +11,11 @@ import { ISponsor } from "../Interfaces/Github/Sponsor";
 import { ISponsorSchema } from "../Interfaces/Database/Sponsor";
 import SponsorModel from "../Database/Schemes/Sponsors";
 import { Contribution } from "../Interfaces/Github/Contribution";
+import { IDiscordUserLevel } from "../Interfaces/Database/DiscordUserLevel";
+import DB_DiscordUserLevel from "../Database/Schemes/DiscordUserLevel";
     
 export const User = new Map<IC_User, IUser>();
+export const DiscordUserLevel = new Map<IDiscordUserLevel["discord_id"], IDiscordUserLevel>()
 export const Sponsor = new Map<IC_Sponsor, ISponsor>();
 export const Respositories = new Map<string, Repository>();
 
@@ -48,6 +51,15 @@ function ContributedTo(userId: number)
     return contributedto
 }
 
+async function CacheDiscordUserLevel(user: IDiscordUserLevel)
+{
+    Logger.cache(`Caching`, user.discord_id);
+    DiscordUserLevel.set(user.discord_id, user);
+
+    if(!DiscordUserLevel.get(user.discord_id))
+        CacheDiscordUserLevel(user);
+}
+
 async function CacheSponsor(sponsor: ISponsorSchema)
 {
     Logger.cache(`Caching sponsor`, sponsor.github_id);
@@ -74,6 +86,18 @@ async function CacheUser(user: IUserSchema)
 
     if(!User.get(user.github_id))
         CacheUser(user);
+}
+
+async function CacheDiscordUserLevels()
+{
+    DB_DiscordUserLevel.find().then(users => {
+        for(const user of users)
+        {
+            CacheDiscordUserLevel(user)
+        }
+
+        return Promise.resolve(true);
+    });
 }
 
 async function CacheSponsors()
@@ -135,11 +159,14 @@ async function CacheGithub()
 
 const CacheClient = {
     User,
+    DiscordUserLevel,
     Sponsor,
     Respositories,
     CacheGithub,
+    CacheDiscordUserLevels,
     CacheSponsor,
     CacheSponsors,
+    CacheDiscordUserLevel,
     CacheUser,
     CacheUsers,
     ContributedTo,
