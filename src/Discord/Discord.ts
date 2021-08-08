@@ -11,6 +11,7 @@ import Slash from "./Struct/Slash";
 import SlashHandler from "./Handlers/SlashHandler";
 import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
 import Logger from "../Lib/Logger";
+import LevelUpSystem from "./Handlers/LevelUpSystem";
 
 declare module 'discord.js' 
 {
@@ -140,6 +141,7 @@ export default class DiscordClient
         this.client.on("message", (message) => {
             if (message.author.bot) return;
             if (!message.guild) return;
+            LevelUpSystem(message);
             if (!message.content.startsWith(Prefix)) return;
     
             const args = message.content.slice(Prefix.length).trim().split(/ +/g);
