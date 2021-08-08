@@ -35,9 +35,34 @@ export default class TopLevelSlash extends Slash
         }
         let tops = ``;
         let count = 1;
+        let hasAuthorBeenListed = false;
         for (let [key, value] of users)
         {
-            tops += `#${count} < <@${value.discord_id}> | Level **${value.level}** | Messages \`${value.xp}\` >\n`
+            if(value.discord_id === author.id)
+            {
+                hasAuthorBeenListed = true;
+                tops += `**#${count}** < <@${value.discord_id}> | **Level** \`${value.level}\` | **Messages** \`${value.xp}\` >\n`
+            }
+            else
+                tops += `#${count} < <@${value.discord_id}> | Level \`${value.level}\` | Messages \`${value.xp}\` >\n`
+
+            if(count >= 15)
+            {
+                if(!hasAuthorBeenListed)
+                {
+                    let countTwo = 1;
+                    for (let [key, value] of users)
+                    {
+                        if(value.discord_id === author.id)
+                        {
+                            hasAuthorBeenListed = true;
+                            tops += `**#${countTwo}** < <@${value.discord_id}> | **Level** \`${value.level}\` | **Messages** \`${value.xp}\` >\n`
+                        }
+                        countTwo++
+                    }
+                }
+                break;
+            }
             count++;
         }
 
