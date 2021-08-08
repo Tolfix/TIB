@@ -53,10 +53,13 @@ export default class TopLevelSlash extends Slash
                     let countTwo = 1;
                     for (let [key, value] of users)
                     {
+                        // Find user and show him as well
                         if(value.discord_id === author.id)
                         {
                             hasAuthorBeenListed = true;
-                            tops += `**#${countTwo}** < <@${value.discord_id}> | **Level** \`${value.level}\` | **Messages** \`${value.xp}\` >\n`
+                            tops += "------------------------------\n";
+                            tops += `**#${countTwo}** < <@${value.discord_id}> | **Level** \`${value.level}\` | **Messages** \`${value.xp}\` >\n`;
+                            break;
                         }
                         countTwo++
                     }
