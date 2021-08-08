@@ -3,9 +3,7 @@ import { Guild, GuildMember, MessageEmbed } from "discord.js";
 import { Client } from "discord.js";
 import { ApplicationCommandInteractionDataOption, Interaction } from "slash-commands";
 import SlashReply from "../../../Lib/Discord/SlashReply";
-import Logger from "../../../Lib/Logger";
 import CacheClient from "../../../Cache/Cache";
-import { stripIndent } from "common-tags";
 import { Color_Main } from "../../../Config";
 
 export default class TopLevelSlash extends Slash
