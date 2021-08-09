@@ -29,7 +29,7 @@ export default class TicketButton extends Button
             ]);
 
             let closeButton = new MessageButton()
-                            .setID("delete_channel")
+                            .setID("are_you_sure")
                             .setLabel("Close ticket")
                             .setStyle("red")
                             .setEmoji("❌");
