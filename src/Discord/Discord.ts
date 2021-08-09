@@ -1,4 +1,3 @@
-
 import discord, { Client, Collection } from "discord.js";
 import { Discord_Token, Prefix } from "../Config";
 import API from "../API/API";
