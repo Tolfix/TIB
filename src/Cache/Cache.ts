@@ -13,6 +13,7 @@ import SponsorModel from "../Database/Schemes/Sponsors";
 import { Contribution } from "../Interfaces/Github/Contribution";
 import { IDiscordUserLevel } from "../Interfaces/Database/DiscordUserLevel";
 import DB_DiscordUserLevel from "../Database/Schemes/DiscordUserLevel";
+import Github_GetAuth from "../Lib/Github/GetAuth";
     
 export const User = new Map<IC_User, IUser>();
 export const DiscordUserLevel = new Map<IDiscordUserLevel["discord_id"], IDiscordUserLevel>()
@@ -81,7 +82,8 @@ async function CacheUser(user: IUserSchema)
         email: user.email,
         github_email: user.email,
         github_id: user.github_id,
-        contributedTo: ContributedTo(user.github_id)
+        sponsor: user.sponsor,
+        contributedTo: ContributedTo(user.github_id),
     });
 
     if(!User.get(user.github_id))
@@ -129,7 +131,7 @@ async function CacheGithub()
     // Get all of our repos
     const Repos = (await (await fetch(`${Github_API}orgs/${Github_Org}/repos`, {
         headers: {
-            authorization: `Basic ${Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`).toString("base64")}`
+            authorization: Github_GetAuth()
         }
     })).json()).filter((e: any) => !e.fork) as Array<any>;
     
@@ -140,7 +142,7 @@ async function CacheGithub()
         // Get contributors
         const Contri = await (await fetch(`${Github_API}repos/${Github_Org}/${repo.name}/stats/contributors`, {
             headers: {
-                authorization: `Basic ${Buffer.from(`${Github_Client_Id}:${Github_Client_Secret}`).toString("base64")}`
+                authorization: Github_GetAuth()
             }
         })).json() as Array<Contributor>
 

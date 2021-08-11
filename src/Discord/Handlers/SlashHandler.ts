@@ -29,6 +29,14 @@ export default async function SlashHandler(client: Client)
         publicKey: Discord_Public_Key,
     });
 
+    const createApplicationCommand = async (interaction: DiscordInteractions, pull: any) => {
+        const [Data, D_Error] = await AW<any>(interaction.createApplicationCommand(pull.options, Discord_Guild_Id))
+        if(Data.retry_after)
+            setTimeout(async () => {
+                Logger.discord(`Adding slash ${pull.name} to collection again.`)
+                createApplicationCommand(interaction, pull)
+            }, Data.retry_after*1000)
+    }
     let commandDir = HomeDir+"/build/Discord/Slash";
     client.category = readdirSync(commandDir);
     readdirSync(commandDir).forEach(async (dir) => {
@@ -38,9 +46,7 @@ export default async function SlashHandler(client: Client)
             if (pull.name) {
                 Logger.discord(`Adding slash ${pull.name} to collection.`)
                 client.slash.set(pull.name, pull);
-                const [Data, C_Error] = await AW(interaction.createApplicationCommand(pull.options, Discord_Guild_Id))
-                if(C_Error)
-                    Logger.error(`${C_Error}`)
+                createApplicationCommand(interaction, pull)
             }
             continue;
         }

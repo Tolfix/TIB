@@ -10,6 +10,6 @@ export interface IUser
     github_id: number;
     github_email: string;
     discord_id: string;
-    // discord_email: string;
+    sponsor: boolean;
     contributedTo: Contribution[] | undefined;
 }

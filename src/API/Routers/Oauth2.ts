@@ -67,6 +67,7 @@ export default class Oauth2Router
                 github_email: github.email,
                 github_id: github.github_id,
                 contributedTo: CacheClient.ContributedTo(github.github_id),
+                sponsor: false,
             });
 
             res.redirect("https://github.com/Tolfix");

@@ -5,6 +5,8 @@ import { ApplicationCommandInteractionDataOption, Interaction } from "slash-comm
 import SlashReply from "../../../Lib/Discord/SlashReply";
 import CacheClient from "../../../Cache/Cache";
 import { Color_Main } from "../../../Config";
+import { getUserBanner } from "discord-banner";
+import Logger from "../../../Lib/Logger";
 
 export default class UserBannerSlash extends Slash
 {
@@ -15,7 +17,7 @@ export default class UserBannerSlash extends Slash
         "options": [
             {
               "type": 6,
-              "name": "User",
+              "name": "user",
               "description": "The user",
               "required": false
             }
@@ -30,15 +32,27 @@ export default class UserBannerSlash extends Slash
         sr: SlashReply
     )
     {
-        console.log(args)
-        const banner = await author.user.bannerURL();
+        let banner;
+
+        if(args)
+        {
+            banner = (await getUserBanner(args[0]?.value as string)).url;
+        }
+
+        if(!args)
+        {
+            banner = await author.user.bannerURL();
+        }
 
         const embed = new MessageEmbed()
             .setTitle(`${author.user.username} banner`)
             .setColor(Color_Main)
 
         if(!banner)
+        {
             embed.setDescription(`User has no banner`);
+            embed.setColor((await author.user.banner).color ?? Color_Main);
+        }
 
         if(banner)
             embed.setImage(banner);
