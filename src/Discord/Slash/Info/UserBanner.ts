@@ -50,13 +50,13 @@ export default class UserBannerSlash extends Slash
         }
 
         const embed = new MessageEmbed()
-            .setTitle(`${author.user.username} banner`)
+            .setTitle(`${username} banner`)
             .setColor(Color_Main)
 
         if(!banner)
         {
             embed.setDescription(`User has no banner`);
-            embed.setColor((await author.user.banner).color ?? Color_Main);
+            embed.setColor(color ?? Color_Main);
         }
 
         if(banner)
