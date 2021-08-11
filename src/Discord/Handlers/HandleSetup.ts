@@ -9,6 +9,7 @@ export default function HandleSetup(client: Client)
         if(role.name.startsWith("+"))
         {
             const name = "level "+((role.name.split("|"))[0].replace("+", "")).trim()
+            Logger.cache(`Caching role "${name}"`);
             Discord_LevelUp_Roles.set(name, role);
         }
     });

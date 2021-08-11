@@ -1,5 +1,6 @@
 import { readdirSync } from "fs";
 import { HomeDir } from "../../Config";
+import Logger from "../../Lib/Logger";
 
 /**
  * 
@@ -15,6 +16,7 @@ export default function CommandHandler(client: any): void
         for (let file of command) {
             const pull = new (require(`${commandDir}/${dir}/${file}`)).default;
             if (pull.name) {
+                Logger.discord(`Adding command ${pull.name} to collection`);
                 client.commands.set(pull.name, pull);
             }
             continue;

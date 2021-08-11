@@ -36,6 +36,7 @@ export default async function SlashHandler(client: Client)
         for (let file of command) {
             const pull = new (require(`${commandDir}/${dir}/${file}`)).default;
             if (pull.name) {
+                Logger.discord(`Adding slash ${pull.name} to collection.`)
                 client.slash.set(pull.name, pull);
                 const [Data, C_Error] = await AW(interaction.createApplicationCommand(pull.options, Discord_Guild_Id))
                 if(C_Error)

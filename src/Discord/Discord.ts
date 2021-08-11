@@ -12,6 +12,7 @@ import GuildMemberAddHandler from "./Handlers/GuildMemberAddHandler";
 import Logger from "../Lib/Logger";
 import LevelUpSystem from "./Handlers/LevelUpSystem";
 import HandleSetup from "./Handlers/HandleSetup";
+import discord_banner from "discord-banner";
 
 declare module 'discord.js' 
 {
@@ -113,6 +114,7 @@ export default class DiscordClient
 
     constructor()
     {
+        discord_banner();
         this.client = new Client();
 
         this.client.commands = new Collection();
