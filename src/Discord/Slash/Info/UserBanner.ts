@@ -33,12 +33,16 @@ export default class UserBannerSlash extends Slash
     )
     {
         let banner;
-        Logger.discord(args)
+
         if(args)
+        {
             banner = (await getUserBanner(args[0]?.value as string)).url;
+        }
 
         if(!args)
+        {
             banner = await author.user.bannerURL();
+        }
 
         const embed = new MessageEmbed()
             .setTitle(`${author.user.username} banner`)
