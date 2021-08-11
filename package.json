@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "cron": "^1.8.2",
     "date-and-time": "^1.0.1",
+    "discord-banner": "^1.6.6",
     "discord-buttons": "git://github.com/Tolfx/discord-buttons.git#dev",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
