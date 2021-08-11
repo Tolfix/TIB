@@ -32,16 +32,21 @@ export default class UserBannerSlash extends Slash
         sr: SlashReply
     )
     {
-        let banner;
+        let banner, username, color;
 
         if(args)
         {
             banner = (await getUserBanner(args[0]?.value as string)).url;
+            let user = client.users.resolve(args[0]?.value as string);
+            username = user?.username;
+            color = (await (user?.banner))?.color;
         }
 
         if(!args)
         {
             banner = await author.user.bannerURL();
+            username = author.user.username;
+            color = (await author.user.banner).color;
         }
 
         const embed = new MessageEmbed()
