@@ -4,10 +4,12 @@ import Check from "./Check";
 import CronHandler from "./Cron/CronHandler";
 import Mongo_Database from "./Database/Mongo";
 import DiscordClient from "./Discord/Discord";
+import NodeEvents from "./Events/NodeEvents";
 import Logger from "./Lib/Logger";
 
 Check();
 CronHandler();
+NodeEvents()
 
 new Mongo_Database();
 
