@@ -84,6 +84,12 @@ export default class TicketSetup extends Slash
                         emoji: `🌟`,
                         style: "green",
                         id: "user_sponsor"
+                    },
+                    {
+                        name: "My Roles",
+                        emoji: `🧨`,
+                        style: "red",
+                        id: "add_user_roles"
                     }
                 )
             ]
