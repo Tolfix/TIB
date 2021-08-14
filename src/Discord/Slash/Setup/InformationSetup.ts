@@ -24,7 +24,7 @@ export default class TicketSetup extends Slash
             }
         ]
     }
-    public run(
+    public async run(
         client: Client,
         interaction: Interaction,
         author: GuildMember,
@@ -95,6 +95,6 @@ export default class TicketSetup extends Slash
             ]
         });
 
-        sr.reply(`Finished`);
+        return await sr.reply(`Finished`);
     }
 }

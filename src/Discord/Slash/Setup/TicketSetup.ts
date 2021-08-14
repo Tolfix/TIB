@@ -21,7 +21,7 @@ export default class TicketSetup extends Slash
             }
         ]
     }
-    public run(
+    public async run(
         client: Client,
         interaction: Interaction,
         author: GuildMember,
@@ -43,6 +43,6 @@ export default class TicketSetup extends Slash
             button: new MessageButton().setStyle("green").setID(`create_ticket`).setLabel(`Ticket Support`).setEmoji(`✉`),
         });
 
-        sr.reply(`Created ticket button!`);
+        return await sr.reply(`Created ticket button!`);
     }
 }

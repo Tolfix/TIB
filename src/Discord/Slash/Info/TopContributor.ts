@@ -16,7 +16,7 @@ export default class TicketSetup extends Slash
         "name": this.name,
         "description": "Shows the top contributors on github",
     }
-    public run(
+    public async run(
         client: Client,
         interaction: Interaction,
         author: GuildMember,
@@ -71,6 +71,6 @@ export default class TicketSetup extends Slash
         .setColor(Color_Main)
         .setThumbnail("https://cdn.tolfix.com/images/TX-Small.png")
 
-        sr.reply(embed);
+        return await sr.reply(embed);
     }
 }
