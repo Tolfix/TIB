@@ -1,3 +1,5 @@
+import { ReplyOptions } from "discord-buttons";
+import { MessageAdditions } from "discord.js";
 import { APIMessage, Client } from "discord.js"
 import { Interaction } from "slash-commands"
 
@@ -23,9 +25,12 @@ export default class SlashReply
         return { ...data, files }
     }
     
-    public reply = async ( response: any) => {
+    public reply = async (response: any, options?: MessageAdditions | (ReplyOptions & {
+        split?: false | undefined;
+    })) => {
         let data = {
             content: response,
+            ...options
         }
     
         if (typeof response === 'object') {
