@@ -43,6 +43,6 @@ export default class TicketSetup extends Slash
             button: new MessageButton().setStyle("green").setID(`create_ticket`).setLabel(`Ticket Support`).setEmoji(`✉`),
         });
 
-        return await sr.reply(`Created ticket button!`);
+        return await sr.reply(`Created ticket button!`, {ephemeral: true});
     }
 }
