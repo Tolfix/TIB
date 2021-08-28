@@ -14,6 +14,7 @@ import { Contribution } from "../Interfaces/Github/Contribution";
 import { IDiscordUserLevel } from "../Interfaces/Database/DiscordUserLevel";
 import DB_DiscordUserLevel from "../Database/Schemes/DiscordUserLevel";
 import Github_GetAuth from "../Lib/Github/GetAuth";
+import AW from "../Lib/AW";
     
 export const User = new Map<IC_User, IUser>();
 export const DiscordUserLevel = new Map<IDiscordUserLevel["discord_id"], IDiscordUserLevel>()
@@ -140,14 +141,14 @@ async function CacheGithub()
     for await(let repo of Repos)
     {
         // Get contributors
-        const Contri = await (await fetch(`${Github_API}repos/${Github_Org}/${repo.name}/stats/contributors`, {
+        const [Contri, API_Error] = await AW<Array<Contributor>>(await (await fetch(`${Github_API}repos/${Github_Org}/${repo.name}/stats/contributors`, {
             headers: {
                 authorization: Github_GetAuth()
             }
-        })).json() as Array<Contributor>
+        })).json())
 
         let data = {
-            contributors: Contri,
+            contributors: Contri ?? [],
             name: repo.name,
             owner: repo.owner.login
         }
