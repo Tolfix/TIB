@@ -117,6 +117,7 @@ export default class DiscordClient
         discord_banner(
             Discord_Token,
         );
+        
         this.client = new Client();
 
         this.client.commands = new Collection();

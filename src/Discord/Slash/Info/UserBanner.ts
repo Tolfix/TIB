@@ -62,6 +62,6 @@ export default class UserBannerSlash extends Slash
         if(banner)
             embed.setImage(banner);
 
-        sr.reply(embed);
+        return await sr.reply(embed);
     }
 }

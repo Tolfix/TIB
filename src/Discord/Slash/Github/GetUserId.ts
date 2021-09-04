@@ -34,6 +34,6 @@ export default class GetUserIdGithub extends Slash
 
         const User = await Github_GetUser(github);
 
-        return sr.reply(`\`${User.id}\``);
+        return await sr.reply(`\`${User.id}\``);
     }
 }

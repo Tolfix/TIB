@@ -6,4 +6,5 @@ export interface ButtonIds
     user_sponsor: string;
     are_you_sure: string;
     delete_message: string;
+    add_user_roles: string;
 } 

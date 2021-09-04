@@ -11,6 +11,7 @@ export const Discord_Public_Key = "b7e1889432f44a4f8c88bcacfbfbe145e45a4fe4138fc
 export const Discord_Ticket_Parent_Id = "870276061261336616"
 export const Discord_Member_Role_Id = "870570341024542781";
 export const Discord_Sponsor_Role_Id = "874986149406453801";
+export const Discord_Contributor_Role_Id = "876148367779037214";
 export const Discord_LevelUp_Roles = new Map<string, Role>();
 export const Prefix = process.env.PREFIX ?? "tib ";
 

@@ -80,6 +80,6 @@ export default class AddSponsorSlash extends Slash
         });
         //@ts-ignore
         (guild.member(client.users.resolve(userId))?.roles.add(guild.roles.cache.find(e => e.id === Discord_Sponsor_Role_Id)));
-        return sr.reply(`Done!`);
+        return await sr.reply(`Done!`);
     }
 }

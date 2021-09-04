@@ -24,7 +24,7 @@ export default class TicketSetup extends Slash
             }
         ]
     }
-    public run(
+    public async run(
         client: Client,
         interaction: Interaction,
         author: GuildMember,
@@ -84,11 +84,17 @@ export default class TicketSetup extends Slash
                         emoji: `🌟`,
                         style: "green",
                         id: "user_sponsor"
+                    },
+                    {
+                        name: "My Roles",
+                        emoji: `🧨`,
+                        style: "red",
+                        id: "add_user_roles"
                     }
                 )
             ]
         });
 
-        sr.reply(`Finished`);
+        return await sr.reply(`Finished`);
     }
 }
