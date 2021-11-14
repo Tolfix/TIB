@@ -17,10 +17,11 @@ export default function HandleSetup(client: Client)
     (client.guilds.cache.get(Discord_Guild_Id))?.members.cache.array().forEach((member) => {
         let memberRole = member.guild.roles.cache.find(e => e.name === "Member");
         if(memberRole)
-        if(!member.roles.cache.find(e => e.name === "Member"))
-        {
-            Logger.discord(`User ${member.id} has no MemberRole, giving role...`);
-            member.roles.add(memberRole);
-        }
+            if(!member.roles.cache.find(e => e.name === "Member"))
+            {
+                Logger.discord(`User ${member.id} has no MemberRole, giving role...`);
+                member.roles.add(memberRole);
+            }
     });
+    
 }
