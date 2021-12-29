@@ -10,26 +10,26 @@ on:
 
 jobs:
 
-  # Test our code..
+  # # Test our code..
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: "Install"
-        run: npm install
+  #     - name: "Install"
+  #       run: npm install
 
-      - name: "Test code"
-        env:
-          GITHUB_ACTION: true
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        run: npm t
+  #     - name: "Test code"
+  #       env:
+  #         GITHUB_ACTION: true
+  #         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+  #       run: npm t
 
   build:
 
-    needs: test
+    # needs: test
 
     runs-on: ubuntu-latest
 

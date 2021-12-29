@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { Github_API, Github_Client_Id, Github_Client_Secret, Github_Org } from "../Config";
+import { Github_API, Github_Org } from "../Config";
 import UserModel from "../Database/Schemes/User";
 import { IC_Sponsor } from "../Interfaces/Cache/Cache_Sponsor";
 import { IC_User } from "../Interfaces/Cache/Cache_User";
