@@ -13,6 +13,7 @@ import Logger from "../Lib/Logger";
 import LevelUpSystem from "./Handlers/LevelUpSystem";
 import HandleSetup from "./Handlers/HandleSetup";
 import discord_banner from "discord-banner";
+import CheckerHandler from "./Handlers/CheckerHandler";
 
 declare module 'discord.js' 
 {
@@ -130,6 +131,7 @@ export default class DiscordClient
         ButtonHandler(this.client);
         SlashHandler(this.client)
         discord_button(this.client);
+        CheckerHandler(this.client);
 
         this.client.on("ready", () => {
             HandleSetup(this.client);
